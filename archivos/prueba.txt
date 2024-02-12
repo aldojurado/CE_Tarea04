@@ -1,0 +1,7 @@
+Este es un archivo de prueba de varias lineas.
+A continuación, este documento es confidencial, nadie debe de leerlo, por lo que, será cifrado.
+Vamos a hacer un test ajajajjaja:
+Mi comida favorita es censurado
+me gusta censurado
+duermo a las censurado
+fin del imput.
