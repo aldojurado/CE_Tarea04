@@ -70,18 +70,20 @@ Si quieres probar el programa rápidamente, puedes ejecutar las siguientes líne
 mvn clean install
 ```
 
-2.- Cifrar:
+2.- Probar:
 
 ```bash
-java -jar target/proyecto3.jar c 4 3 archivos/prueba.txt evals
+java -jar target/proyecto3.jar
 ```
 
-3.- Descifrar:
+3.- Esto ya ignora:
 
 ```bash
 java -jar target/proyecto3.jar d evaluaciones/evals.evl archivos/prueba.cif 3
 ```
+
 ### Pruebas unitarias
+
 Si quieres ver las pruebas unitaras ubicadas en la carpeta src/test:
 
 ```bash
