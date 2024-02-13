@@ -54,7 +54,7 @@ Tarea 01
 <configuration>
 <archive>
 <manifest>
-<mainClass>main.java.CE</mainClass>
+<mainClass>CE</mainClass>
 </manifest>
 </archive>
 </configuration>
