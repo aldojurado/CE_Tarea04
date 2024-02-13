@@ -1,6 +1,6 @@
 # Tarea 01: Problemas de Optimización
 
-## Participantes:
+## Integrantes del equipo:
 
 - **Ángeles Sánchez Aldo Javier**
 - **Jurado Guadalupe Aldo Emilio**
@@ -38,22 +38,14 @@ Para compilar de forma limpia:
 mvn clean install
 ```
 
-Para limpiar los archivos generados por la compilación:
-
-```bash
-mvn clean
-```
-
-### Ejecutar
-
-1.- Compilar:
-
-```bash
-mvn clean install
-```
-
-2.- Ejecutar:
+Para ejecutar el programa (después de compilar):
 
 ```bash
 java -jar target/proyecto3.jar
+```
+
+Adicionalmente para limpiar los archivos generados por la compilación:
+
+```bash
+mvn clean
 ```
