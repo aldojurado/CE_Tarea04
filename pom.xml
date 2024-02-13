@@ -1,12 +1,12 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 <modelVersion>4.0.0</modelVersion>
-<groupId>modelado</groupId>
+<groupId>computo</groupId>
 <artifactId>proyecto</artifactId>
-<version>Modelado y Programación</version>
+<version>Cómputo Evolutivo</version>
 <packaging>jar</packaging>
-<name>Proyecto 3</name>
+<name>Tarea 01</name>
 <description>
-Proyecto 3 esquema de shamir
+Tarea 01
 </description>
 <properties>
 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -84,8 +84,8 @@ Proyecto 3 esquema de shamir
 <author>false</author>
 <version>false</version>
 <use>true</use>
-<windowtitle>Modelado y Programación</windowtitle>
-<doctitle><h1>Modelado y Programación</h1></doctitle>
+<windowtitle>Cómputo Evolutivo</windowtitle>
+<doctitle><h1>Cómputo Evolutivo</h1></doctitle>
 </configuration>
 </plugin>
 <plugin>
