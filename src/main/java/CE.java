@@ -17,7 +17,7 @@ import java.io.FileReader;
 public class CE {
 
     public static void main(String[] args) {
-        System.out.println("Welcome to the CE program!");
+        System.out.println("Despierta papuh");
     }
 
 }
