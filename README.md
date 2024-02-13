@@ -1,5 +1,10 @@
 # Tarea 01: Problemas de Optimización
 
+## Participantes:
+
+- **Ángeles Sánchez Aldo Javier**
+- **Jurado Guadalupe Aldo Emilio**
+
 ## Requisitos
 
 Este proyecto usa maven. <br>
