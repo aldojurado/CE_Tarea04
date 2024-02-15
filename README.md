@@ -2,8 +2,8 @@
 
 ## Integrantes del equipo:
 
-- **Ángeles Sánchez Aldo Javier**
-- **Jurado Guadalupe Aldo Emilio**
+- **Ángeles Sánchez Aldo Javier 320286144**
+- **Jurado Guadalupe Aldo Emilio 320025255**
 
 ## Requisitos
 
@@ -42,7 +42,7 @@ Para ejecutar el programa (después de compilar) hay dos formas:
 
 ### Forma 1:
 
-Busqueda local: java -jar target/proyecto3.jar k d x_1 ... x_n <br>
+Busqueda local: java -jar target/ejecuta.jar k d x_1 ... x_n <br>
 Donde k es el número de la operación (1 = Sum Squares, 2 = Dixon Price, 3 = Styblinski Tang) <br>
 d es la dimensión <br>
 x_1 ... x_n son los valores iniciales de la solución <br>
@@ -50,12 +50,12 @@ x_1 ... x_n son los valores iniciales de la solución <br>
 Ejemplo:
 
 ```bash
-java -jar target/proyecto3.jar 1 2 5.1 4
+java -jar target/ejecuta.jar 1 2 5.1 4
 ```
 
 ### Forma 2 (aún en desarrollo):
 
-Busqueda aleatoria: java -jar target/proyecto3.jar k d a iteraciones <br>
+Busqueda aleatoria: java -jar target/ejecuta.jar k d a iteraciones <br>
 Donde k es el número de la operación (1 = Sum Squares, 2 = Dixon Price, 3 = Styblinski Tang) <br>
 d es la dimensión <br>
 el caracter 'a' indica que será búsqueda aleatoria <br>
@@ -64,7 +64,7 @@ y iteraciones es el número de iteraciones que deseamos para la búsqueda<br>
 Ejemplo:
 
 ```bash
-java -jar target/proyecto3.jar 2 3 a 10000
+java -jar target/ejecuta.jar 2 3 a 10000
 ```
 
 ## Limpieza
