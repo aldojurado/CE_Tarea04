@@ -2,9 +2,6 @@ import java.lang.Math;
 
 public class Funciones {
 
-    public Funciones() {
-    }
-
     public double sumSquare(double[] valores) {
         double res = 0;
         for (int i = 0; i < valores.length; i++) {
