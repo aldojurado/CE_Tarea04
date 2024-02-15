@@ -101,7 +101,14 @@ public class CE {
      * @param iter son las iteraciones que se realizarán
      */
     public static void busquedaAleatoria(int k, int d, int iter) {
-
+        Evaluador evaluador = new Evaluador();
+        double[] res = evaluador.evaluaAleatorio(k, d, iter);
+        for (int i = 0; i < res.length; i++) {
+            System.out.println("Parte " + i + " es :" + res[i]);
+        }
+        Funciones fun = new Funciones();
+        System.out.println(fun.sumSquare(res));
+        System.out.println("Mejor:");
     }
 
     public static void busquedaLocal(int k, int d, double[] valores) {
