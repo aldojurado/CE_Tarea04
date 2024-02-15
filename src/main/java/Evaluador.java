@@ -28,24 +28,12 @@ public class Evaluador {
     }
 
     private double[] aleatorioStyblinskiTang(int d, int iter) {
-        double[] mejor = { 1 };
-        for (int i = 0; i < iter; i++) {
-
-        }
-        return mejor;
-    }
-
-    private double[] aleatorioDixonPrice(int d, int iter) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'aleatorioDixonPrice'");
-    }
-
-    private double[] aleatorioSumSquare(int d, int iter) {
+        double[] res = new double[d + 3];
         double[] mejor = new double[d];
         double mejorD = 10000.0;
-        double peor;
+        double peorD = 0;
         double actualD;
-        double[] promedio = new double[d];
+        double promedio = 0;
         double[] actual = new double[d];
 
         Random random = new Random();
@@ -55,9 +43,11 @@ public class Evaluador {
                 valorAleatorio = random.nextDouble() * 20 - 10;
                 actual[j] = valorAleatorio;
             }
-            actualD = evaluaEn(1, actual);
+            actualD = evaluaEn(3, actual);
+            promedio += actualD;
             if (i == 0) {
                 mejorD = actualD;
+                peorD = actualD;
                 for (int j = 0; j < d; j++) {
                     mejor[j] = actual[j];
                 }
@@ -68,10 +58,114 @@ public class Evaluador {
                         mejor[j] = actual[j];
                     }
                 }
+                if (actualD > peorD) {
+                    peorD = actualD;
+                }
             }
 
         }
-        return mejor;
+        res[d] = mejorD;
+        res[d + 1] = peorD;
+        res[d + 2] = promedio / iter;
+        for (int i = 0; i < d; i++) {
+            res[i] = mejor[i];
+
+        }
+        return res;
+    }
+
+    private double[] aleatorioDixonPrice(int d, int iter) {
+        double[] res = new double[d + 3];
+        double[] mejor = new double[d];
+        double mejorD = 10000.0;
+        double peorD = 0;
+        double actualD;
+        double promedio = 0;
+        double[] actual = new double[d];
+
+        Random random = new Random();
+        double valorAleatorio;
+        for (int i = 0; i < iter; i++) {
+            for (int j = 0; j < d; j++) {
+                valorAleatorio = random.nextDouble() * 20 - 10;
+                actual[j] = valorAleatorio;
+            }
+            actualD = evaluaEn(2, actual);
+            promedio += actualD;
+            if (i == 0) {
+                mejorD = actualD;
+                peorD = actualD;
+                for (int j = 0; j < d; j++) {
+                    mejor[j] = actual[j];
+                }
+            } else {
+                if (actualD < mejorD) {
+                    mejorD = actualD;
+                    for (int j = 0; j < d; j++) {
+                        mejor[j] = actual[j];
+                    }
+                }
+                if (actualD > peorD) {
+                    peorD = actualD;
+                }
+            }
+
+        }
+        res[d] = mejorD;
+        res[d + 1] = peorD;
+        res[d + 2] = promedio / iter;
+        for (int i = 0; i < d; i++) {
+            res[i] = mejor[i];
+
+        }
+        return res;
+    }
+
+    private double[] aleatorioSumSquare(int d, int iter) {
+        double[] res = new double[d + 3];
+        double[] mejor = new double[d];
+        double mejorD = 10000.0;
+        double peorD = 0;
+        double actualD;
+        double promedio = 0;
+        double[] actual = new double[d];
+
+        Random random = new Random();
+        double valorAleatorio;
+        for (int i = 0; i < iter; i++) {
+            for (int j = 0; j < d; j++) {
+                valorAleatorio = random.nextDouble() * 20 - 10;
+                actual[j] = valorAleatorio;
+            }
+            actualD = evaluaEn(1, actual);
+            promedio += actualD;
+            if (i == 0) {
+                mejorD = actualD;
+                peorD = actualD;
+                for (int j = 0; j < d; j++) {
+                    mejor[j] = actual[j];
+                }
+            } else {
+                if (actualD < mejorD) {
+                    mejorD = actualD;
+                    for (int j = 0; j < d; j++) {
+                        mejor[j] = actual[j];
+                    }
+                }
+                if (actualD > peorD) {
+                    peorD = actualD;
+                }
+            }
+
+        }
+        res[d] = mejorD;
+        res[d + 1] = peorD;
+        res[d + 2] = promedio / iter;
+        for (int i = 0; i < d; i++) {
+            res[i] = mejor[i];
+
+        }
+        return res;
     }
 
 }

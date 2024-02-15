@@ -23,8 +23,6 @@ public class CE {
                             try {
                                 iteraciones = Integer.parseInt(args[3]);
                                 if (iteraciones > 0) {
-                                    System.out.println("Lo lograste papuh, llegaste a la aleatoria: \nk = " + k
-                                            + "\nd = " + d + "\niteraciones = " + iteraciones);
                                     busquedaAleatoria(k, d, iteraciones);
                                 } else {
                                     throw new Exception();
@@ -57,11 +55,11 @@ public class CE {
                                 for (int i = 1; i < d; i++) {
                                     valores[i] = Double.parseDouble(args[i + 2]);
                                 }
-                                System.out.println("Lo lograste papuh, llegaste a la local");
-                                System.out.println("k = " + k + "\nd = " + d);
+                                System.out.println("Dimensión: " + d + "\nValores de x_i:");
                                 for (int i = 0; i < d; i++) {
-                                    System.out.println("\n x_" + (i + 1) + " = " + valores[i]);
+                                    System.out.println("x_" + (i + 1) + " = " + valores[i]);
                                 }
+                                System.out.println("Resultado:");
                                 busquedaLocal(k, d, valores);
                             } catch (Exception e) {
                                 System.out.println("Los valores de x_i deben ser números reales");
@@ -103,12 +101,13 @@ public class CE {
     public static void busquedaAleatoria(int k, int d, int iter) {
         Evaluador evaluador = new Evaluador();
         double[] res = evaluador.evaluaAleatorio(k, d, iter);
-        for (int i = 0; i < res.length; i++) {
-            System.out.println("Parte " + i + " es :" + res[i]);
+        System.out.println("Mejor: " + res[d] + "\n Donde:");
+        for (int i = 0; i < d; i++) {
+            System.out.println("  x_" + (i + 1) + " = " + res[i]);
         }
-        Funciones fun = new Funciones();
-        System.out.println(fun.sumSquare(res));
-        System.out.println("Mejor:");
+
+        System.out.println("\nPeor: " + res[d + 1]);
+        System.out.println("promedio: " + res[d + 2]);
     }
 
     public static void busquedaLocal(int k, int d, double[] valores) {
