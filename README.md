@@ -53,7 +53,7 @@ Ejemplo:
 java -jar target/ejecuta.jar 1 2 5.1 4
 ```
 
-### Forma 2 (aún en desarrollo):
+### Forma 2 :
 
 Busqueda aleatoria: java -jar target/ejecuta.jar k d a iteraciones <br>
 Donde k es el número de la operación (1 = Sum Squares, 2 = Dixon Price, 3 = Styblinski Tang) <br>
