@@ -107,7 +107,7 @@ public class CE {
         }
 
         System.out.println("\nPeor: " + res[d + 1]);
-        System.out.println("promedio: " + res[d + 2]);
+        System.out.println("Promedio: " + res[d + 2]);
     }
 
     public static void busquedaLocal(int k, int d, double[] valores) {
