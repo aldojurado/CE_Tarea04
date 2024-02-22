@@ -1,4 +1,4 @@
-# Tarea 01: Problemas de Optimización
+# Tarea 02: Representación de Soluciones
 
 ## Integrantes del equipo:
 
