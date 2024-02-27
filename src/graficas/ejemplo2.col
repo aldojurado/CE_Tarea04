@@ -1,5 +1,5 @@
 c Este es un archivo de ejemplo para una gráfica con 10 vértices y 15 aristas
-p edge 10 14
+p edge 10 15
 e 1 2
 e 1 5
 e 2 3
