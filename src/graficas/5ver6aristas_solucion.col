@@ -1,0 +1,17 @@
+Primer solución aleatoria: [2, 4, 4, 3, 1]
+
+Evaluación de la primer solución aleatoria: 4
+
+Solución vecina generada: [2, 4, 4, 2, 1]
+
+Evaluación de la solución vecina: 3
+
+Solución más optimizada encontrada después de 0 iteraciones y 30 iteraciones sin mejora.
+Vértice 1: Rojo
+Vértice 2: Naranja
+Vértice 3: Naranja
+Vértice 4: Rojo
+Vértice 5: Azul
+Total de colores utilizados: 3
+
+Arreglo de valores discretos: [1, 5, 5, 1, 3]

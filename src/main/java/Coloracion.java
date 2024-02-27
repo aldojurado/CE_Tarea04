@@ -100,13 +100,18 @@ public class Coloracion{
         String nombreArchivoSalida = getRuta().replace(".col", "_solucion.col");
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(nombreArchivoSalida))) {
+            int[] solucionRandom = solucionAleatoria();
+            writer.println("Primer solución aleatoria: " + java.util.Arrays.toString(solucionRandom) + "\n");
+            writer.println("Evaluación de la primer solución aleatoria: " + evaluarSolucion(solucionRandom) + "\n");
+            writer.println("Solución vecina generada: " + java.util.Arrays.toString(generarSolucionVecina(solucionRandom)) + "\n");
+            writer.println("Evaluación de la solución vecina: " + evaluarSolucion(generarSolucionVecina(solucionRandom)) + "\n");
             writer.println("Solución más optimizada encontrada después de " + iteraciones + " iteraciones y " + tolerancia + " iteraciones sin mejora.");
 
             for (int vertice = 0; vertice < solucion.length; vertice++) {
                 writer.println("Vértice " + (vertice + 1) + ": " + getColor(solucion[vertice]));
             }
             writer.println("Total de colores utilizados: " + evaluarSolucion(solucion) + "\n");
-            writer.println("Solución en formato Arreglo de valores discretos: " + java.util.Arrays.toString(solucion));
+            writer.println("Arreglo de valores discretos: " + java.util.Arrays.toString(solucion));
 
         } catch (IOException e) {
             System.err.println("Error al escribir en el archivo: " + e.getMessage());
@@ -124,7 +129,7 @@ public class Coloracion{
         //Recorremos la matriz de adyacencia
         for (int i = 0; i < numVertices; i++){
 
-            //Registramos los colores ya utilizados en un arreglo de  (true) 
+            //Registramos los colores ya utilizados en un arreglo de booleanos (true si está usado) 
             boolean[] coloresUsados = new boolean[numVertices + 1];
 
             for (int j = 0; j < numVertices; j++) {
@@ -133,11 +138,12 @@ public class Coloracion{
                     coloresUsados[solucion[j]] = true;
                 }
             }
-            //Genera un color aleatorio que no esté prohibido y lo asigna al vértice i
+            //Genera un color aleatorio distinto y lo asigna al vértice i
             int color;
             do {
                 color = 1 + r.nextInt(numVertices);
             } while (coloresUsados[color]);
+
             solucion[i] = color;
         
         }
@@ -176,10 +182,10 @@ public class Coloracion{
         }
     
         // Identificar los colores prohibidos para el vértice seleccionado.
-        boolean[] coloresProhibidos = new boolean[numVertices + 1];
+        boolean[] coloresUsados = new boolean[numVertices + 1];
         for (int j = 0; j < numVertices; j++) {
             if (matrizAdyacencia[vertice][j] == 1) {
-                coloresProhibidos[solucionActual[j]] = true;
+                coloresUsados[solucionActual[j]] = true;
             }
         }
     
@@ -187,7 +193,7 @@ public class Coloracion{
         int colorSeleccionado = 0;
         int maxFrecuencia = 0;
         for (int color = 1; color <= numVertices; color++) {
-            if (!coloresProhibidos[color] && frecuenciaColores[color] > maxFrecuencia) {
+            if (!coloresUsados[color] && frecuenciaColores[color] > maxFrecuencia) {
                 colorSeleccionado = color;
                 maxFrecuencia = frecuenciaColores[color];
             }
@@ -200,7 +206,7 @@ public class Coloracion{
             // Si no, asignar un color al azar que no esté prohibido (enfoque de respaldo).
             do {
                 colorSeleccionado = 1 + rand.nextInt(numVertices);
-            } while (coloresProhibidos[colorSeleccionado]);
+            } while (coloresUsados[colorSeleccionado]);
             nuevaSolucion[vertice] = colorSeleccionado;
         }
     
@@ -233,15 +239,5 @@ public class Coloracion{
 
     
 
-    public static void main(String[] args) {
-
-        if (args.length == 0) {
-            System.out.println("Es necesario ingresar la ruta del archivo .col como argumento.");
-            return;
-        }
-
-        String rutaIngresada = args[0];
-        Coloracion coloracion = new Coloracion(rutaIngresada);
-        coloracion.busquedaPorEscalada();
-    }
+    
 }
