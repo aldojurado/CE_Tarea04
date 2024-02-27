@@ -17,15 +17,15 @@ public class CE {
             coloracion.busquedaPorEscalada();
         } else if (opcion == 2) {
             Funciones f = new Funciones();
-            double x = 18.3;
-            double a = 15.2;
-            double b = 31.3;
-            int nBits = 10;
-            System.out.println("El número a codificar es " + x);
+            int nBits = 25;
+            int a = 0;
+            int b = 1;
+            double[] x = { 0.5, 0.75, 0.25, 0.10 };
             int[] res = f.codifica(x, nBits, a, b);
-
-            double decodificado = f.decodifica(res, a, b);
-            System.out.println("\nEl número decodificado es " + decodificado);
+            double[] decod = f.decodifica(res, nBits, a, b);
+            for (int i = 0; i < decod.length; i++) {
+                System.out.println(decod[i]);
+            }
         } else {
             System.out.println("Opción inválida");
         }

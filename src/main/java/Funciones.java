@@ -52,4 +52,26 @@ public class Funciones {
         return decimal;
     }
 
+    public int[] codifica(double x[], int nBits, double a, double b) {
+        int res[] = new int[x.length * nBits];
+        for (int i = 0; i < x.length; i++) {
+            int[] aux = codifica(x[i], nBits, a, b);
+            for (int j = 0; j < nBits; j++) {
+                res[i * nBits + j] = aux[j];
+            }
+        }
+        return res;
+    }
+
+    public double[] decodifica(int x_cod[], int nBits, double a, double b) {
+        double[] res = new double[x_cod.length / nBits];
+        for (int i = 0; i < res.length; i++) {
+            int[] aux = new int[nBits];
+            for (int j = 0; j < nBits; j++) {
+                aux[j] = x_cod[i * nBits + j];
+            }
+            res[i] = decodifica(aux, a, b);
+        }
+        return res;
+    }
 }
