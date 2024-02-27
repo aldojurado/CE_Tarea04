@@ -74,3 +74,10 @@ Adicionalmente para limpiar los archivos generados por la compilación:
 ```bash
 mvn clean
 ```
+
+## Comentarios
+# Representación binaria para números reales.
+El archivo ...
+# Búsqueda por escalada 
+Justificación de la implementación. 
+No se utiliza una función de "soluciones" aleatorias asignando un color aleatorio a cada vértice, puesto que la función objetivo en ese caso se enfocaría a contar el número de conflictos que se encuentran en nuestra gráfica, mientras que generar soluciones aleatorias enfocadas a respetar las adyacencias, nos asegura generar siempre soluciones válidas aunque en número de colores utilizados no sea el óptimo. 
