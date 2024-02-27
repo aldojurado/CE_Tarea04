@@ -168,53 +168,61 @@ public class Coloracion{
         return totalColores;
     }
 
+     /**
+     * Genera una solución vecina haciendo un pequeño cambio respecto a la solución actual.
+     * @param Un arreglo de enteros que representa la solución actual
+     * @return La solución vecina
+     */
     private int[] generarSolucionVecina(int[] solucionActual) {
         Random rand = new Random();
         int[] nuevaSolucion = solucionActual.clone();
         int vertice = rand.nextInt(numVertices);
     
-        // Contar la frecuencia de cada color en la solución actual.
+        // Contamos la frecuencia de cada color en la solución actual
         int[] frecuenciaColores = new int[numVertices + 1];
-        for (int color : solucionActual) {
-            if (color != 0) { // Asumiendo que 0 no es un color válido.
+        for (int color : solucionActual){
+	    // Sabemos que los colores comienzan desde 1
+            if (color != 0) { 
                 frecuenciaColores[color]++;
             }
         }
-    
-        // Identificar los colores prohibidos para el vértice seleccionado.
+    	// Verificamos cuales colores están ya utilizados por los vértices adyacentes 
         boolean[] coloresUsados = new boolean[numVertices + 1];
         for (int j = 0; j < numVertices; j++) {
             if (matrizAdyacencia[vertice][j] == 1) {
                 coloresUsados[solucionActual[j]] = true;
             }
         }
-    
-        // Buscar el color más frecuente que no esté prohibido para este vértice.
+    	// Buscamos el color más frecuente y que al colocarlo regrese una solución válida
         int colorSeleccionado = 0;
         int maxFrecuencia = 0;
-        for (int color = 1; color <= numVertices; color++) {
-            if (!coloresUsados[color] && frecuenciaColores[color] > maxFrecuencia) {
+        for (int color = 1; color <= numVertices; color++){
+            if (!coloresUsados[color] && frecuenciaColores[color] > maxFrecuencia){
                 colorSeleccionado = color;
                 maxFrecuencia = frecuenciaColores[color];
             }
         }
-    
-        // Si se encontró un color válido, asignarlo al vértice.
+    	
+        // Si encontramos el color, se lo asignamos
         if (colorSeleccionado != 0) {
             nuevaSolucion[vertice] = colorSeleccionado;
         } else {
-            // Si no, asignar un color al azar que no esté prohibido (enfoque de respaldo).
+        // Si ninguno cumple, le asignamos un color aleatorio para devolver otra solución 
             do {
                 colorSeleccionado = 1 + rand.nextInt(numVertices);
             } while (coloresUsados[colorSeleccionado]);
+
             nuevaSolucion[vertice] = colorSeleccionado;
         }
     
         return nuevaSolucion;
     }
     
-    
-
+    /**
+     * Resuelve el problema de coloración utilizando búsqueda por escalada
+     * @param Un arreglo de enteros que representa la solución actual
+     * @return La solución vecina
+     */  
     public void busquedaPorEscalada() {
         int iteraciones = 0;
         int[] solucionActual = solucionAleatoria();
