@@ -8,15 +8,15 @@ public class Funciones {
             String bin = Integer.toBinaryString(n);
             for (int i = 0; i < nBit; i++) {
                 if (i < nBit - bin.length()) {
-                    res[i] = 0;
+                    res[nBit - 1 - i] = 0;
                 } else {
-                    res[i] = Integer.parseInt(String.valueOf(bin.charAt(i - (nBit - bin.length()))));
+                    res[nBit - 1 - i] = Integer.parseInt(String.valueOf(bin.charAt(i - (nBit - bin.length()))));
                 }
             }
         } else {
-            throw new IllegalArgumentException("El número " + n + " no se puede codificar con " + nBit + " bits.");
+            throw new IllegalArgumentException(
+                    "El número " + n + " no se puede codificar con " + nBit + " bits.");
         }
-
         return res;
     }
 
@@ -26,30 +26,24 @@ public class Funciones {
         x = x - a;
         double pres = valoresInte / (Math.pow(2, nBits) - 1);
         double valor = x / pres;
-        if (Math.pow(2, nBits) > valor) {
-            String bin = Integer.toBinaryString((int) valor);
-            for (int i = 0; i < nBits; i++) {
-                if (i < nBits - bin.length()) {
-                    res[nBits - 1 - i] = 0;
-                } else {
-                    res[nBits - 1 - i] = Integer.parseInt(String.valueOf(bin.charAt(i - (nBits - bin.length()))));
-                }
-            }
-        } else {
-            throw new IllegalArgumentException(
-                    "El número " + (int) valor + " no se puede codificar con " + nBits + " bits.");
-        }
+        res = codifica_aux((int) valor, nBits);
         return res;
     }
 
     public double decodifica(int x_cod[], double a, double b) {
+        double decimal = decdifica_aux(x_cod);
+        double pres = (b - a) / (Math.pow(2, x_cod.length) - 1);
+        decimal = decimal * pres + a;
+        return decimal;
+    }
+
+    public double decdifica_aux(int x_cod[]) {
         double decimal = 0;
         for (int i = 0; i < x_cod.length; i++) {
             decimal += x_cod[i] * Math.pow(2, i);
         }
-        double pres = (b - a) / (Math.pow(2, x_cod.length) - 1);
-        decimal = decimal * pres + a;
         return decimal;
+
     }
 
     public int[] codifica(double x[], int nBits, double a, double b) {

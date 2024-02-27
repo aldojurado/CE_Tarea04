@@ -1,22 +1,22 @@
-Primer solución aleatoria: [7, 6, 10, 2, 1, 3, 1, 10, 7, 9]
+Primer solución aleatoria: [7, 2, 6, 10, 9, 10, 5, 7, 9, 3]
 
 Evaluación de la primer solución aleatoria: 7
 
-Solución vecina generada: [7, 6, 1, 2, 1, 3, 1, 10, 7, 9]
+Solución vecina generada: [7, 2, 6, 10, 9, 10, 5, 7, 9, 3]
 
 Evaluación de la solución vecina: 7
 
-Solución más optimizada encontrada después de 5 iteraciones y 30 iteraciones sin mejora.
+Solución más optimizada encontrada después de 2 iteraciones y 30 iteraciones sin mejora.
 Vértice 1: Rojo
-Vértice 2: Naranja
-Vértice 3: Verde
-Vértice 4: Naranja
-Vértice 5: Verde
-Vértice 6: Verde
-Vértice 7: Rojo
-Vértice 8: Naranja
-Vértice 9: Rojo
-Vértice 10: Verde
-Total de colores utilizados: 3
+Vértice 2: Azul
+Vértice 3: Naranja
+Vértice 4: Rojo
+Vértice 5: Azul
+Vértice 6: Rojo
+Vértice 7: Azul
+Vértice 8: Rojo
+Vértice 9: Naranja
+Vértice 10: Morado
+Total de colores utilizados: 4
 
-Arreglo de valores discretos: [1, 5, 2, 5, 2, 2, 1, 5, 1, 2]
+Arreglo de valores discretos: [1, 3, 5, 1, 3, 1, 3, 1, 5, 6]
