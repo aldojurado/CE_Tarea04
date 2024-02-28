@@ -10,19 +10,11 @@ public class Coloracion{
     // Representación del problema con matriz de adyacencia
     private int[][] matrizAdyacencia;
 
-    // Colores disponibles. Su finalidad es hacer el resultado final más amigable para el usuario.
-    private String[] colores = {
-        "Rojo", "Verde", "Azul", "Amarillo", "Naranja", "Morado", "Rosa", "Gris", 
-        "Negro", "Blanco", "Turquesa", "Magenta", "Lima", "Cian", "Lavanda", 
-        "Radioactivo", "Coral", "Beige", "Menta", "Azul Marino"
-    };
-    
     // Almacena el número de vértices del archivo ingresado para crear las matrices
     private int numVertices;
     
     // Almacena la ruta del archivo ingresada para devolver la solución
     String rutaArchivo = "";
-
 
     /**
      * Constructor de la clase Coloracion
@@ -42,22 +34,13 @@ public class Coloracion{
     }
 
     /**
-     * Regresa el color asignado al número ingresado como parámetro
-     * @param numero El número del color
-     * @return El color asignado al número
-     */
-    private String getColor(int numero){
-        //Idealmente siempre hay colores disponibles, para fines de la tarea no debe haber problema. 
-        return colores[numero - 1];  
-    }
-
-    /**
      * Lee el archivo .col ingresado y almacena la información en la matriz de adyacencia.
      * @param rutaIngresada Ruta del archivo .col
      */
     private void leeArchivo(String rutaIngresada){
         
-        try(BufferedReader br = new BufferedReader(new FileReader(rutaIngresada))){
+        try(BufferedReader br = new BufferedReader(new FileReader("src/main/java" + rutaIngresada + ".col"))){
+        //try(BufferedReader br = new BufferedReader(new FileReader(rutaIngresada))){
             String linea;
 
             while((linea = br.readLine()) != null){
@@ -101,6 +84,7 @@ public class Coloracion{
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(nombreArchivoSalida))) {
             int[] solucionRandom = solucionAleatoria();
+
             writer.println("Primer solución aleatoria: " + java.util.Arrays.toString(solucionRandom) + "\n");
             writer.println("Evaluación de la primer solución aleatoria: " + evaluarSolucion(solucionRandom) + "\n");
             writer.println("Solución vecina generada: " + java.util.Arrays.toString(generarSolucionVecina(solucionRandom)) + "\n");
@@ -108,7 +92,7 @@ public class Coloracion{
             writer.println("Solución más optimizada encontrada después de " + iteraciones + " iteraciones y " + tolerancia + " iteraciones sin mejora.");
 
             for (int vertice = 0; vertice < solucion.length; vertice++) {
-                writer.println("Vértice " + (vertice + 1) + ": " + getColor(solucion[vertice]));
+                writer.println("Vértice " + (vertice + 1) + ": Color " + solucion[vertice]);
             }
             writer.println("Total de colores utilizados: " + evaluarSolucion(solucion) + "\n");
             writer.println("Arreglo de valores discretos: " + java.util.Arrays.toString(solucion));
@@ -142,23 +126,25 @@ public class Coloracion{
             int color;
             do {
                 color = 1 + r.nextInt(numVertices);
-            } while (coloresUsados[color]);
+            } while (coloresUsados[color]); //Repite hasta que el color esté disponible
 
             solucion[i] = color;
         
         }
+
         return solucion;
     }
 
     /**
-     * Evalúa la solución ingresada, cuenta cuántos colores son utilizados para colorear la gráfica.
+     * Evalúa la solución ingresada, cuenta cuántos colores son utilizados para colorear la gráfica
+     * Mientras menos colores se utilicen la solución es mejor
      * @param solucion Un arreglo de enteros que representan colores con la solución
      * @return El número de colores utilizados
      */
     private int evaluarSolucion(int[] solucion){
         boolean[] coloresUsados = new boolean[numVertices + 1];
         int totalColores = 0;
-        //Itera sobre la solución, marca los colores ya utilizados y los cuenta
+        //Itera sobre la solución, marca los colores ya utilizados y cuenta el número de apariciones
         for (int color : solucion) {
             if (!coloresUsados[color]) {
                 coloresUsados[color] = true;
@@ -168,84 +154,98 @@ public class Coloracion{
         return totalColores;
     }
 
-     /**
-     * Genera una solución vecina haciendo un pequeño cambio respecto a la solución actual.
-     * @param Un arreglo de enteros que representa la solución actual
-     * @return La solución vecina
+    /**
+     * Genera una solución vecina a partir de la solución actual
+     * @param solucionActual Un arreglo de enteros que representan los colores de la solución actual
+     * @return Un arreglo de enteros que representan los colores de la solución vecina
      */
-    private int[] generarSolucionVecina(int[] solucionActual) {
+    private int[] generarSolucionVecina(int[] solucionActual){
+
         Random rand = new Random();
-        int[] nuevaSolucion = solucionActual.clone();
+        int[] solucionVecina = solucionActual.clone();
+        //Seleccionamos un vértice aleatorio
         int vertice = rand.nextInt(numVertices);
     
-        // Contamos la frecuencia de cada color en la solución actual
+        // Contar la frecuencia de cada color en la solución actual.
         int[] frecuenciaColores = new int[numVertices + 1];
-        for (int color : solucionActual){
-	    // Sabemos que los colores comienzan desde 1
-            if (color != 0) { 
+        for (int color : solucionActual) {
+            if (color != 0) { // Sabemos que los colores empiezan desde 1
                 frecuenciaColores[color]++;
             }
         }
-    	// Verificamos cuales colores están ya utilizados por los vértices adyacentes 
+    
+        // Identificamos los colores que no pueden ser utilizados para el vértice seleccionado
         boolean[] coloresUsados = new boolean[numVertices + 1];
-        for (int j = 0; j < numVertices; j++) {
-            if (matrizAdyacencia[vertice][j] == 1) {
-                coloresUsados[solucionActual[j]] = true;
+        for (int i = 0; i < numVertices; i++) {
+            if (matrizAdyacencia[vertice][i] == 1) {
+                coloresUsados[solucionActual[i]] = true;
             }
         }
-    	// Buscamos el color más frecuente y que al colocarlo regrese una solución válida
+    
+        // Buscamos el color más frecuente que sea posible utilizar 
         int colorSeleccionado = 0;
         int maxFrecuencia = 0;
         for (int color = 1; color <= numVertices; color++){
-            if (!coloresUsados[color] && frecuenciaColores[color] > maxFrecuencia){
+            // Si es posible utilizar el color y es el más frecuente, lo seleccionamos
+            if (!coloresUsados[color] && frecuenciaColores[color] > maxFrecuencia) {
                 colorSeleccionado = color;
                 maxFrecuencia = frecuenciaColores[color];
             }
         }
-    	
-        // Si encontramos el color, se lo asignamos
-        if (colorSeleccionado != 0) {
-            nuevaSolucion[vertice] = colorSeleccionado;
-        } else {
-        // Si ninguno cumple, le asignamos un color aleatorio para devolver otra solución 
+    
+        // Le asignamos el color encontrado al vértice seleccionado 
+        if(colorSeleccionado != 0){
+            solucionVecina[vertice] = colorSeleccionado;
+        }else{
+        // Si no se encontró un color, se selecciona uno aleatorio que no se haya utilizado
             do {
                 colorSeleccionado = 1 + rand.nextInt(numVertices);
             } while (coloresUsados[colorSeleccionado]);
-
-            nuevaSolucion[vertice] = colorSeleccionado;
+            solucionVecina[vertice] = colorSeleccionado;
         }
     
-        return nuevaSolucion;
+        return solucionVecina;
     }
     
+    
+
     /**
-     * Resuelve el problema de coloración utilizando búsqueda por escalada
-     * @param Un arreglo de enteros que representa la solución actual
-     * @return La solución vecina
-     */  
-    public void busquedaPorEscalada() {
-        int iteraciones = 0;
+     * Devuelve una solución más óptima del problema de la coloración
+     * @param toleranciaMaxima El número de iteraciones sin mejora que se permiten
+     * @return Un arreglo de enteros que representan los colores de la solución más óptima
+     */
+    public int[] busquedaPorEscalada(int toleranciaMaxima) {
+        // Partimos de una solcuón aleatoria
         int[] solucionActual = solucionAleatoria();
+        // Evaluamos la solución
         int evaluacionActual = evaluarSolucion(solucionActual);
-
+        
+        // Inicializamos los contadores
         int tolerancia = 0;
-        while (tolerancia < 30) {
-            int[] solucionVecina = generarSolucionVecina(solucionActual);
-            int evaluacionVecina = evaluarSolucion(solucionVecina);
+        int iteracionesMejoran = 0;
 
-            if (evaluacionVecina < evaluacionActual) {
-                solucionActual = solucionVecina;
-                evaluacionActual = evaluacionVecina;
-                iteraciones++;
-            } else {
+        // Mientras no se alcance la tolerancia máxima
+        while(tolerancia < toleranciaMaxima){
+            // Generamos una solución vecina
+            int[] nuevaSolucion = generarSolucionVecina(solucionActual);
+            int nuevaEvaluacion = evaluarSolucion(nuevaSolucion);
+            // Si la solución vecina es mejor, la actualizamos
+            if (nuevaEvaluacion < evaluacionActual) {
+                solucionActual = nuevaSolucion;
+                evaluacionActual = nuevaEvaluacion;
+                tolerancia = 0;
+                iteracionesMejoran++;
+            }else{
+            // No es mejor, entonces aumentamos la tolerancia
                 tolerancia++;
             }
         }
-
-        escribeSolucion(solucionActual, iteraciones, tolerancia);
+        // Escribimos la solución en un archivo de salida
+        escribeSolucion(solucionActual, iteracionesMejoran, tolerancia);
+        
+        return solucionActual;
     }
 
-    
 
     
 }

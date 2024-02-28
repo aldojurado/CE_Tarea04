@@ -11,10 +11,10 @@ public class CE {
         int opcion = scanner.nextInt();
 
         if (opcion == 1) {
-            System.out.println("Ingrese la ruta del archivo .col:");
+            System.out.println("Ingrese el nombre del archivo: ");
             String rutaIngresada = scanner.next();
             Coloracion coloracion = new Coloracion(rutaIngresada);
-            coloracion.busquedaPorEscalada();
+            coloracion.busquedaPorEscalada(30);
         } else if (opcion == 2) {
             Funciones f = new Funciones();
             int nBits = 25;
