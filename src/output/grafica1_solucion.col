@@ -1,0 +1,30 @@
+Primer solución aleatoria: [7, 16, 13, 17, 9, 11, 2, 7, 13, 14, 9, 3, 1, 8, 2, 1, 15, 6]
+
+Evaluación de la primer solución aleatoria: 13
+
+Solución vecina generada: [7, 16, 13, 17, 9, 11, 2, 7, 13, 14, 9, 3, 1, 8, 2, 1, 15, 6]
+
+Evaluación de la solución vecina: 13
+
+Solución más optimizada encontrada después de 5 iteraciones y 30 iteraciones sin mejora.
+Vértice 1: Color 12
+Vértice 2: Color 8
+Vértice 3: Color 17
+Vértice 4: Color 1
+Vértice 5: Color 1
+Vértice 6: Color 10
+Vértice 7: Color 10
+Vértice 8: Color 10
+Vértice 9: Color 15
+Vértice 10: Color 10
+Vértice 11: Color 12
+Vértice 12: Color 1
+Vértice 13: Color 15
+Vértice 14: Color 8
+Vértice 15: Color 1
+Vértice 16: Color 8
+Vértice 17: Color 17
+Vértice 18: Color 8
+Total de colores utilizados: 6
+
+Arreglo de valores discretos: [12, 8, 17, 1, 1, 10, 10, 10, 15, 10, 12, 1, 15, 8, 1, 8, 17, 8]
