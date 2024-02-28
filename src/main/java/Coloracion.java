@@ -83,7 +83,7 @@ public class Coloracion {
      */
     private void escribeSolucion(int[] solucion, int iteraciones, int tolerancia){
         // El nombre del archivo de salida es la ruta del archivo de entrada con un identificador "_solucion" al final.
-        String nombreArchivoSalida = "src/graficas/"+ getRuta().replace(".col", "_solucion.col");
+        String nombreArchivoSalida = "src/graficas/"+ getRuta() + "_solucion.col";
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(nombreArchivoSalida))) {
             int[] solucionRandom = solucionAleatoria();
