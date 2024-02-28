@@ -21,10 +21,10 @@ public class CE {
             int a = 0;
             int b = 1;
             double[] x = { 0.5, 0.75, 0.25, 0.10 };
-            int[] res = f.codifica(x, nBits, a, b);
-            double[] decod = f.decodifica(res, nBits, a, b);
-            for (int i = 0; i < decod.length; i++) {
-                System.out.println(decod[i]);
+            int[] xCodificado = f.codifica(x, nBits, a, b);
+            double[] xDecod = f.decodifica(xCodificado, nBits, a, b);
+            for (int i = 0; i < xDecod.length; i++) {
+                System.out.println(xDecod[i]);
             }
         } else {
             System.out.println("Opción inválida");
