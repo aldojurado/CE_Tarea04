@@ -42,7 +42,6 @@ public class Coloracion {
     private void leeArchivo(String rutaIngresada) {
 
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/java/" + rutaIngresada + ".col"))) {
-            // try(BufferedReader br = new BufferedReader(new FileReader(rutaIngresada))){
             String linea;
 
             while ((linea = br.readLine()) != null) {
