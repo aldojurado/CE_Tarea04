@@ -2,6 +2,13 @@ import java.lang.Math;
 
 public class Funciones {
 
+    /**
+     * Codifica un número entero a un número binario con nBits
+     * 
+     * @param n    es el número entero a codificar
+     * @param nBit es el número de bits que debe tener el número binario codificado
+     * @return el número n codificado en binario
+     */
     public int[] codifica_aux(int n, int nBit) {
         int[] res = new int[nBit];
         if (Math.pow(2, nBit) > n) {
@@ -20,6 +27,16 @@ public class Funciones {
         return res;
     }
 
+    /**
+     * Codifica un número real a un número binario con nBits respecto a un intervalo
+     * [a, b]
+     * 
+     * @param x     es el número real a codificar
+     * @param nBits es el número de bits que debe tener el número binario codificado
+     * @param a     es el límite inferior del intervalo
+     * @param b     es el límite superior del intervalo
+     * @return el número x codificado en binario respecto al intervalo proprcionado
+     */
     public int[] codifica(double x, int nBits, double a, double b) {
         int[] res = new int[nBits];
         double valoresInte = b - a;
@@ -30,6 +47,15 @@ public class Funciones {
         return res;
     }
 
+    /**
+     * Decodifica un número binario a un número real respecto a un intervalo [a, b]
+     * 
+     * @param x_cod es el número binario que representa un número real en cierto
+     *              intervalo
+     * @param a     es el límite inferior del intervalo
+     * @param b     es el límite superior del intervalo
+     * @return el número real decodificado
+     */
     public double decodifica(int x_cod[], double a, double b) {
         double decimal = decdifica_aux(x_cod);
         double pres = (b - a) / (Math.pow(2, x_cod.length) - 1);
@@ -37,6 +63,12 @@ public class Funciones {
         return decimal;
     }
 
+    /**
+     * Decodifica un número binario a un número entero
+     * 
+     * @param x_cod es el número binario que representa un número entero
+     * @return el número entero decodificado
+     */
     public double decdifica_aux(int x_cod[]) {
         double decimal = 0;
         for (int i = 0; i < x_cod.length; i++) {
@@ -46,6 +78,18 @@ public class Funciones {
 
     }
 
+    /**
+     * Codifica un vector de número reales a un vector de números binarios con nBits
+     * respecto a un intervalo [a, b]
+     * 
+     * @param x     es el vector de números reales a codificar
+     * @param nBits es el número de bits que debe tener cada uno de los números
+     *              binarios codificados
+     * @param a     es el límite inferior del intervalo
+     * @param b     es el límite superior del intervalo
+     * @return un vector con los números reales codificados en binario respecto al
+     *         intervalo proprcionado
+     */
     public int[] codifica(double x[], int nBits, double a, double b) {
         int res[] = new int[x.length * nBits];
         for (int i = 0; i < x.length; i++) {
@@ -57,6 +101,16 @@ public class Funciones {
         return res;
     }
 
+    /**
+     * Decodifica un vector de números binarios a un vector de números reales
+     * 
+     * @param x_cod es el vector de números binarios de nBits que representa un
+     *              vector de números reales en cierto intervalo
+     * @param nBits el tamaño de cada número binario
+     * @param a     es el límite inferior del intervalo
+     * @param b     es el límite superior del intervalo
+     * @return un vector con los números reales decodificados
+     */
     public double[] decodifica(int x_cod[], int nBits, double a, double b) {
         double[] res = new double[x_cod.length / nBits];
         for (int i = 0; i < res.length; i++) {
