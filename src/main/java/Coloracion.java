@@ -41,7 +41,7 @@ public class Coloracion {
      */
     private void leeArchivo(String rutaIngresada) {
 
-        try (BufferedReader br = new BufferedReader(new FileReader("src/output/" + rutaIngresada + ".col"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(rutaIngresada))) {
             String linea;
 
             while ((linea = br.readLine()) != null) {
@@ -84,7 +84,8 @@ public class Coloracion {
     private void escribeSolucion(int[] solucion, int iteraciones, int tolerancia) {
         // El nombre del archivo de salida es la ruta del archivo de entrada con un
         // identificador "_solucion" al final.
-        String nombreArchivoSalida = "src/output/" + getRuta() + "_solucion.col";
+        
+        String nombreArchivoSalida = getRuta().replaceAll("\\.col$", "") + "_solucion.col";
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(nombreArchivoSalida))) {
             int[] solucionRandom = solucionAleatoria();
@@ -264,6 +265,68 @@ public class Coloracion {
         escribeSolucion(solucionActual, iteracionesMejoran, tolerancia);
 
         return solucionActual;
+    }
+
+    public int[] busquedaLocalIterada(int numIteraciones, int toleranciaMaxima) {
+        // Inicia con una solución aleatoria
+        int[] mejorSolucion = solucionAleatoria();
+        int mejorEvaluacion = evaluarSolucion(mejorSolucion);
+    
+        for (int i = 0; i < numIteraciones; i++) {
+            // Perturbar la mejor solución actual antes de la siguiente ronda de hill climbing
+            int[] solucionPerturbada = perturbarSolucion(mejorSolucion);
+            int[] solucionActual = solucionPerturbada;
+            int evaluacionActual = evaluarSolucion(solucionActual);
+            int tolerancia = 0;
+    
+            // Aplica Hill Climbing en la solución perturbada
+            while (tolerancia < toleranciaMaxima) {
+                int[] nuevaSolucion = generarSolucionVecina(solucionActual);
+                int nuevaEvaluacion = evaluarSolucion(nuevaSolucion);
+    
+                if (nuevaEvaluacion < evaluacionActual) {
+                    solucionActual = nuevaSolucion;
+                    evaluacionActual = nuevaEvaluacion;
+                    tolerancia = 0;
+                } else {
+                    tolerancia++;
+                }
+            }
+    
+            // Actualiza la mejor solución si se encuentra una mejor
+            if (evaluacionActual < mejorEvaluacion) {
+                mejorSolucion = solucionActual;
+                mejorEvaluacion = evaluacionActual;
+            }
+        }
+    
+        // Escribimos la mejor solución en un archivo de salida
+        escribeSolucion(mejorSolucion, numIteraciones, toleranciaMaxima);
+    
+        return mejorSolucion;
+    }
+    
+    private int[] perturbarSolucion(int[] solucion) {
+        int[] solucionPerturbada = solucion.clone();
+        Random rand = new Random();
+    
+        // Cambiar los colores de un subconjunto aleatorio de vértices
+        for (int i = 0; i < solucionPerturbada.length / 10; i++) { // Perturba el 10% de los vértices
+            int vertice = rand.nextInt(solucionPerturbada.length);
+            solucionPerturbada[vertice] = 1 + rand.nextInt(numVertices);
+        }
+    
+        return solucionPerturbada;
+    }
+    
+
+    public static void main(String[] args) {
+        java.util.Scanner s = new java.util.Scanner(System.in);
+        System.out.println("Ingrese el nombre del archivo: ");
+        String rutaIngresada = s.next();
+        Coloracion coloracion = new Coloracion(rutaIngresada);
+        //coloracion.busquedaPorEscalada(30);
+        coloracion.busquedaLocalIterada(30, 30);
     }
 
 }
