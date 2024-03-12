@@ -16,7 +16,7 @@ public class CE {
             Coloracion coloracion = new Coloracion(rutaIngresada);
             coloracion.busquedaPorEscalada(30);
         } else if (opcion == 2) {
-            Funciones f = new Funciones();
+            VectorBinario f = new VectorBinario();
             int nBits = 25;
             int a = 0;
             int b = 1;
