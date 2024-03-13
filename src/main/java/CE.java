@@ -21,14 +21,21 @@ public class CE {
             System.out.println("2. Búsqueda aleatoria");
             int tipoOptimizacion = scanner.nextInt();
             System.out.println("Seleccione la función a evaluar:");
-            System.out.println("1. fun 1");
-            System.out.println("2. fun2");
-            System.out.println("3. fun3");
-            System.out.println("4. fun3");
-            System.out.println("5. fun3");
+            System.out.println("1. Sphere Function");
+            System.out.println("2. Ackley Function");
+            System.out.println("3. Griewank Function");
+            System.out.println("4. Rastrigin Function");
+            System.out.println("5. Rosenbrock Function");
+            System.out.println("6. Sum Square Function");
+            System.out.println("7. Styblinski-Tang Function");
+            System.out.println("8. Dixon-Price Function");
             int numFun = scanner.nextInt();
+
+            System.out.println("Ingrese la dimensión:");
+            int dimension = scanner.nextInt();
+
             OptimizacionCombinatoria metodoOptimizacion = new OptimizacionCombinatoria();
-            metodoOptimizacion.ejecutarAlgoritmo(tipoOptimizacion, numFun);
+            metodoOptimizacion.ejecutarAlgoritmo(tipoOptimizacion, numFun, dimension);
         } else {
             System.out.println("Opción inválida");
         }
