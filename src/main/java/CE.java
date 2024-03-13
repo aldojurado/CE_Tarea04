@@ -16,16 +16,19 @@ public class CE {
             Coloracion coloracion = new Coloracion(rutaIngresada);
             coloracion.busquedaPorEscalada(30);
         } else if (opcion == 2) {
-            VectorBinario f = new VectorBinario();
-            int nBits = 25;
-            int a = 0;
-            int b = 1;
-            double[] x = { 0.5, 0.75, 0.25, 0.10 };
-            int[] xCodificado = f.codifica(x, nBits, a, b);
-            double[] xDecod = f.decodifica(xCodificado, nBits, a, b);
-            for (int i = 0; i < xDecod.length; i++) {
-                System.out.println(xDecod[i]);
-            }
+            System.out.println("Seleccione el tipo de optimización:");
+            System.out.println("1. Recocido simulado");
+            System.out.println("2. Búsqueda aleatoria");
+            int tipoOptimizacion = scanner.nextInt();
+            System.out.println("Seleccione la función a evaluar:");
+            System.out.println("1. fun 1");
+            System.out.println("2. fun2");
+            System.out.println("3. fun3");
+            System.out.println("4. fun3");
+            System.out.println("5. fun3");
+            int numFun = scanner.nextInt();
+            OptimizacionCombinatoria metodoOptimizacion = new OptimizacionCombinatoria();
+            metodoOptimizacion.ejecutarAlgoritmo(tipoOptimizacion, numFun);
         } else {
             System.out.println("Opción inválida");
         }
