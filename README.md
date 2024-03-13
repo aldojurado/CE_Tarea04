@@ -54,6 +54,8 @@ mvn clean
 
 ## Comentarios
 
-# Agregar comentarios
+# Sobre la interfaz 
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sed nisl diam. Sed sed risus eget diam molestie convallis et et tortor. Duis congue nunc eget convallis hendrerit. In malesuada sem eu aliquam iaculis. Suspendisse malesuada sem ac nunc suscipit consequat. In auctor felis sit amet odio porta, at tincidunt enim sodales. Morbi tincidunt tincidunt nulla a finibus. Integer nulla eros, maximus at pharetra vitae, finibus ac purus. 
+El programa cuenta con una pequeña interfaz de texto para ir seleccionando
+las distintas opciones para la ejecución de los algoritmos.
+Los parámetros se pasan después de la ejecución.
