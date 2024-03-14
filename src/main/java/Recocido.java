@@ -1,17 +1,19 @@
 public class Recocido {
 
     final int NBITS = 22;
-    final int MAXITER = 1000000;
+    final int MAXITER = 100000;
 
     public double[] recocido(int numFun, int dimension) {
         Binario bin = new Binario();
         Evaluador eval = new Evaluador();
-        double[] res = new double[dimension];
         double[] intervalo = eval.intervalo(numFun);
+
+        // solución inicial
         int[] solucion = bin.generaSolucionAleatoria(NBITS * dimension);
-        double temp = 1000;
+        double temp = 10000;
         int numIt = 0;
-        while (numIt < MAXITER && temp > 0.0001) {
+
+        while (numIt < MAXITER && temp > 0) {
             numIt++;
 
             // seleccionamos un vecino
@@ -21,15 +23,16 @@ public class Recocido {
                 solucion = vecino;
             } else {
                 double proba = Math.exp((valores[0] - valores[1]) / temp);
-                if (Math.random() < proba) {
+                double rnd = Math.random();
+                System.out.println("Proba: " + proba + " Rnd: " + rnd);
+                if (rnd < proba) {
                     solucion = vecino;
                 }
             }
-
-            // bajamos la temperatura
+            temp = temp * 0.999;
 
         }
-        return res;
+        return bin.decodifica(solucion, NBITS, intervalo[0], intervalo[1]);
     }
 
     private double[] evaluaBin(int[] solucion, int[] vecino, int numFun, double[] intervalo) {
