@@ -122,12 +122,12 @@ public class Binario {
         return res;
     }
 
-    // Este aún no lo uso pero ya está implementado
     public int[] vecinoRnd(int[] x) {
         Random random = new Random();
+        int[] vecino = x.clone();
         int indiceAleatorio = random.nextInt(x.length);
-        x[indiceAleatorio] = 1 - x[indiceAleatorio];
-        return x;
+        vecino[indiceAleatorio] = 1 - x[indiceAleatorio];
+        return vecino;
     }
 
     public int[] generaSolucionAleatoria(int nBITS) {

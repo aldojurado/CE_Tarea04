@@ -40,8 +40,7 @@ public class Coloracion {
      * @param rutaIngresada Ruta del archivo .col
      */
     private void leeArchivo(String rutaIngresada) {
-
-        try (BufferedReader br = new BufferedReader(new FileReader(rutaIngresada))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\aldoe\\Downloads\\CE_Tarea03\\src\\output\\graficas\\" + rutaIngresada + ".col"))) {
             String linea;
 
             while ((linea = br.readLine()) != null) {
@@ -84,17 +83,16 @@ public class Coloracion {
     private void escribeSolucion(int[] solucion, int iteraciones, int tolerancia) {
         // El nombre del archivo de salida es la ruta del archivo de entrada con un
         // identificador "_solucion" al final.
-        
-        String nombreArchivoSalida = getRuta().replaceAll("\\.col$", "") + "_solucion.col";
+        String nombreArchivoSalida = "C:\\Users\\aldoe\\Downloads\\CE_Tarea03\\src\\output\\graficas\\" + getRuta() + "_solucion.col";
 
-        try (PrintWriter writer = new PrintWriter(new FileWriter(nombreArchivoSalida))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(nombreArchivoSalida))){
             int[] solucionRandom = solucionAleatoria();
-
+            int[] solucionVecina = generarSolucionVecina(solucionRandom);
             writer.println("Primer solución aleatoria: " + java.util.Arrays.toString(solucionRandom) + "\n");
             writer.println("Evaluación de la primer solución aleatoria: " + evaluarSolucion(solucionRandom) + "\n");
             writer.println("Solución vecina generada: "
-                    + java.util.Arrays.toString(generarSolucionVecina(solucionRandom)) + "\n");
-            writer.println("Evaluación de la solución vecina: " + evaluarSolucion(generarSolucionVecina(solucionRandom))
+                    + java.util.Arrays.toString(solucionVecina) + "\n");
+            writer.println("Evaluación de la solución vecina: " + evaluarSolucion(solucionVecina)
                     + "\n");
             writer.println("Solución más optimizada encontrada después de " + iteraciones + " iteraciones y "
                     + tolerancia + " iteraciones sin mejora.");
@@ -120,31 +118,9 @@ public class Coloracion {
     private int[] solucionAleatoria() {
 
         int[] solucion = new int[numVertices];
-        Random r = new Random();
-        // Recorremos la matriz de adyacencia
         for (int i = 0; i < numVertices; i++) {
-
-            // Registramos los colores ya utilizados en un arreglo de booleanos (true si
-            // está usado)
-            boolean[] coloresUsados = new boolean[numVertices + 1];
-
-            for (int j = 0; j < numVertices; j++) {
-                // Si son adyacentes y j ya está coloreado, se marca el color como utilizado
-                // (true)
-                if (matrizAdyacencia[i][j] == 1 && solucion[j] != 0) {
-                    coloresUsados[solucion[j]] = true;
-                }
-            }
-            // Genera un color aleatorio distinto y lo asigna al vértice i
-            int color;
-            do {
-                color = 1 + r.nextInt(numVertices);
-            } while (coloresUsados[color]); // Repite hasta que el color esté disponible
-
-            solucion[i] = color;
-
+            solucion[i] = encontrarColorValido(i, solucion);
         }
-
         return solucion;
     }
 
@@ -159,8 +135,7 @@ public class Coloracion {
     private int evaluarSolucion(int[] solucion) {
         boolean[] coloresUsados = new boolean[numVertices + 1];
         int totalColores = 0;
-        // Itera sobre la solución, marca los colores ya utilizados y cuenta el número
-        // de apariciones
+        // Itera sobre la solución, marca los colores ya utilizados y cuenta el número de apariciones
         for (int color : solucion) {
             if (!coloresUsados[color]) {
                 coloresUsados[color] = true;
@@ -179,57 +154,50 @@ public class Coloracion {
      *         vecina
      */
     private int[] generarSolucionVecina(int[] solucionActual) {
-
         Random rand = new Random();
         int[] solucionVecina = solucionActual.clone();
         // Seleccionamos un vértice aleatorio
         int vertice = rand.nextInt(numVertices);
-
-        // Contar la frecuencia de cada color en la solución actual.
-        int[] frecuenciaColores = new int[numVertices + 1];
-        for (int color : solucionActual) {
-            if (color != 0) { // Sabemos que los colores empiezan desde 1
-                frecuenciaColores[color]++;
-            }
-        }
-
-        // Identificamos los colores que no pueden ser utilizados para el vértice
-        // seleccionado
+    
         boolean[] coloresUsados = new boolean[numVertices + 1];
         for (int i = 0; i < numVertices; i++) {
             if (matrizAdyacencia[vertice][i] == 1) {
                 coloresUsados[solucionActual[i]] = true;
             }
         }
-
-        // Buscamos el color más frecuente que sea posible utilizar
-        int colorSeleccionado = 0;
-        int maxFrecuencia = 0;
-        for (int color = 1; color <= numVertices; color++) {
-            // Si es posible utilizar el color y es el más frecuente, lo seleccionamos
-            if (!coloresUsados[color] && frecuenciaColores[color] > maxFrecuencia) {
-                colorSeleccionado = color;
-                maxFrecuencia = frecuenciaColores[color];
+    
+        // Nueva estructura para almacenar la frecuencia de colores y el color
+        int[][] frecuenciasColores = new int[numVertices + 1][2];
+        for (int i = 1; i <= numVertices; i++) {
+            frecuenciasColores[i][0] = i; // Color
+            frecuenciasColores[i][1] = 0; // Frecuencia
+        }
+        
+        // Contar la frecuencia de cada color en la solución actual
+        for (int color : solucionActual) {
+            if (color != 0) {
+                frecuenciasColores[color][1]++;
             }
         }
-
-        // Le asignamos el color encontrado al vértice seleccionado
-        if (colorSeleccionado != 0) {
-            solucionVecina[vertice] = colorSeleccionado;
-        } else {
-            // Si no se encontró un color, se selecciona uno aleatorio que no se haya
-            // utilizado
-            do {
-                colorSeleccionado = 1 + rand.nextInt(numVertices);
-            } while (coloresUsados[colorSeleccionado]);
-            solucionVecina[vertice] = colorSeleccionado;
+    
+        // Ordenar colores por su frecuencia de mayor a menor
+        java.util.Arrays.sort(frecuenciasColores, (a, b) -> Integer.compare(b[1], a[1]));
+    
+        // Intentar asignar el color más frecuente, luego el segundo más frecuente, y así sucesivamente
+        for (int i = 0; i < numVertices; i++) {
+            int colorCandidato = frecuenciasColores[i][0];
+            if (!coloresUsados[colorCandidato]) {
+                solucionVecina[vertice] = colorCandidato;
+                break;
+            }
         }
-
+    
         return solucionVecina;
     }
+    
 
     /**
-     * Devuelve una solución más óptima del problema de la coloración
+     * Utiliza búsqueda por escalada para encontrar la solución más óptima
      * 
      * @param toleranciaMaxima El número de iteraciones sin mejora que se permiten
      * @return Un arreglo de enteros que representan los colores de la solución más
@@ -266,37 +234,64 @@ public class Coloracion {
 
         return solucionActual;
     }
+    
 
+    /**
+     * Utiliza búsqueda por escalada para encontrar la solución más óptima, en este caso se
+     * requiere una solución inicial, puesto que no la genera aleatoriamente.
+     * 
+     * @param solucionInicial La solución inicial a partir de la cual se inicia la búsqueda
+     * @param toleranciaMaxima El número de iteraciones sin mejora que se permiten
+     * @return Un arreglo de enteros que representan los colores de la solución más
+     *         óptima
+     */
+    public int[] busquedaPorEscaladaConInicial(int[] solucionInicial, int toleranciaMaxima) {
+        // Clonamos la solución ingresada
+        int[] solucionActual = solucionInicial.clone();
+        int evaluacionActual = evaluarSolucion(solucionActual);
+        
+        int tolerancia = 0;
+        // Realiza lo mismo que busquedaPorEscalada, pero con la solución inicial
+        while (tolerancia < toleranciaMaxima){
+            int[] nuevaSolucion = generarSolucionVecina(solucionActual);
+            int nuevaEvaluacion = evaluarSolucion(nuevaSolucion);
+            if (nuevaEvaluacion < evaluacionActual) {
+                solucionActual = nuevaSolucion;
+                evaluacionActual = nuevaEvaluacion;
+                tolerancia = 0;
+            } else {
+                tolerancia++;
+            }
+        }
+    
+        return solucionActual;
+    }
+
+    
+    /**
+     * Utiliza búsqueda local iterada para encontrar la solución más óptima
+     * @param numIteraciones Criterio para que se detenga la búsqueda local iterada
+     * @param toleranciaMaxima Criterio para que se detenga la búsqueda por escalada
+     * @return Un arreglo de enteros que representan los colores de la solución más
+     *        óptima
+     */
     public int[] busquedaLocalIterada(int numIteraciones, int toleranciaMaxima) {
         // Inicia con una solución aleatoria
         int[] mejorSolucion = solucionAleatoria();
         int mejorEvaluacion = evaluarSolucion(mejorSolucion);
     
         for (int i = 0; i < numIteraciones; i++) {
-            // Perturbar la mejor solución actual antes de la siguiente ronda de hill climbing
+            // Perturbamos la mejor solución actual
             int[] solucionPerturbada = perturbarSolucion(mejorSolucion);
-            int[] solucionActual = solucionPerturbada;
-            int evaluacionActual = evaluarSolucion(solucionActual);
-            int tolerancia = 0;
-    
-            // Aplica Hill Climbing en la solución perturbada
-            while (tolerancia < toleranciaMaxima) {
-                int[] nuevaSolucion = generarSolucionVecina(solucionActual);
-                int nuevaEvaluacion = evaluarSolucion(nuevaSolucion);
-    
-                if (nuevaEvaluacion < evaluacionActual) {
-                    solucionActual = nuevaSolucion;
-                    evaluacionActual = nuevaEvaluacion;
-                    tolerancia = 0;
-                } else {
-                    tolerancia++;
-                }
-            }
-    
-            // Actualiza la mejor solución si se encuentra una mejor
-            if (evaluacionActual < mejorEvaluacion) {
-                mejorSolucion = solucionActual;
-                mejorEvaluacion = evaluacionActual;
+            
+            // Realizamos la búsqueda por escalada (Búsqueda local) con la solución perturbada
+            int[] solucionOptimizada = busquedaPorEscaladaConInicial(solucionPerturbada, toleranciaMaxima);
+            int evaluacionOptimizada = evaluarSolucion(solucionOptimizada);
+            
+            // Compara y actualiza la mejor solución si se encuentra una mejor
+            if (evaluacionOptimizada < mejorEvaluacion) {
+                mejorSolucion = solucionOptimizada;
+                mejorEvaluacion = evaluacionOptimizada;
             }
         }
     
@@ -306,27 +301,60 @@ public class Coloracion {
         return mejorSolucion;
     }
     
+    
+    /**
+     * Perturba la solución actual cambiando de color un porcentaje de vértices
+     * 
+     * @param solucion La solución actual que se perturbará
+     * @return Un arreglo de enteros que representa la solución perturbada
+     */
     private int[] perturbarSolucion(int[] solucion) {
         int[] solucionPerturbada = solucion.clone();
         Random rand = new Random();
     
-        // Cambiar los colores de un subconjunto aleatorio de vértices
-        for (int i = 0; i < solucionPerturbada.length / 10; i++) { // Perturba el 10% de los vértices
+        // Selecciona el 10% de vértices para cambiarles el color
+        for (int i = 0; i < solucionPerturbada.length / 30; i++) {
             int vertice = rand.nextInt(solucionPerturbada.length);
-            solucionPerturbada[vertice] = 1 + rand.nextInt(numVertices);
-        }
     
+            // Encuentra un nuevo color válido para el vértice seleccionado
+            solucionPerturbada[vertice] = encontrarColorValido(vertice, solucionPerturbada);
+        }
+        
         return solucionPerturbada;
     }
     
-
-    public static void main(String[] args) {
-        java.util.Scanner s = new java.util.Scanner(System.in);
-        System.out.println("Ingrese el nombre del archivo: ");
-        String rutaIngresada = s.next();
-        Coloracion coloracion = new Coloracion(rutaIngresada);
-        //coloracion.busquedaPorEscalada(30);
-        coloracion.busquedaLocalIterada(30, 30);
+    /**
+     * Encuentra un color válido para un vértice, es decir, un color que no esté
+     * siendo utilizado por sus vértices adyacentes
+     * @param vertice El vértice para el cual se busca un color válido
+     * @param solucion La solución actual
+     * @return 
+     */
+    private int encontrarColorValido(int vertice, int[] solucion) {
+        Random rand = new Random();
+        // Creamos un arreglo de valores booleanos para registrar los colores utilizados
+        boolean[] coloresInvalidos = new boolean[numVertices + 1];
+        
+        // Marcar los colores de los vértices adyacentes como no válidos
+        for (int i = 0; i < numVertices; i++){
+            // Si son adyacentes, el color no es válido
+            if (matrizAdyacencia[vertice][i] == 1) { 
+                coloresInvalidos[solucion[i]] = true;
+            }
+        }
+    
+        // Encontrar un color válido (no usado por ningún adyacente)
+        int color;
+        do {
+            color = 1 + rand.nextInt(numVertices);
+        } while (coloresInvalidos[color]);
+    
+        return color;
     }
-
+    
+    
 }
+
+
+//Esquema de representación de la solución
+//Esquema de codificacion de soluciones
