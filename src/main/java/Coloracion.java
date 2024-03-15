@@ -3,6 +3,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class Coloracion {
@@ -40,7 +43,7 @@ public class Coloracion {
      * @param rutaIngresada Ruta del archivo .col
      */
     private void leeArchivo(String rutaIngresada) {
-        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\aldoe\\Downloads\\CE_Tarea03\\src\\output\\graficas\\" + rutaIngresada + ".col"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/output/graficas/" + rutaIngresada + ".col"))) {
             String linea;
 
             while ((linea = br.readLine()) != null) {
@@ -83,7 +86,7 @@ public class Coloracion {
     private void escribeSolucion(int[] solucion, int iteraciones, int tolerancia) {
         // El nombre del archivo de salida es la ruta del archivo de entrada con un
         // identificador "_solucion" al final.
-        String nombreArchivoSalida = "C:\\Users\\aldoe\\Downloads\\CE_Tarea03\\src\\output\\graficas\\" + getRuta() + "_solucion.col";
+        String nombreArchivoSalida = "src/output/graficas/" + getRuta() + "_solucion.col";
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(nombreArchivoSalida))){
             int[] solucionRandom = solucionAleatoria();
@@ -309,19 +312,30 @@ public class Coloracion {
      * @return Un arreglo de enteros que representa la solución perturbada
      */
     private int[] perturbarSolucion(int[] solucion) {
+        // Comenzamos clonando la solución ingresada
         int[] solucionPerturbada = solucion.clone();
         Random rand = new Random();
-    
-        // Selecciona el 10% de vértices para cambiarles el color
+
+        // Creamos una lista para registrar todos los vértices de la gráfica
+        List<Integer> vertices = new ArrayList<>(solucionPerturbada.length);
+        for (int i = 0; i < solucionPerturbada.length; i++) {
+            vertices.add(i);
+        }
+
+        // Mezclamos aleatoriamente los vértices para seleccionarlos al azar
+        Collections.shuffle(vertices, rand);
+
+        // Seleccionamos el 30% de los vértices para cambiarles el color, asegurando que sean distintos
         for (int i = 0; i < solucionPerturbada.length / 30; i++) {
-            int vertice = rand.nextInt(solucionPerturbada.length);
-    
-            // Encuentra un nuevo color válido para el vértice seleccionado
+            int vertice = vertices.get(i);
+
+            // Asignamos un nuevo color válido para el vértice seleccionado
             solucionPerturbada[vertice] = encontrarColorValido(vertice, solucionPerturbada);
         }
-        
+
         return solucionPerturbada;
     }
+
     
     /**
      * Encuentra un color válido para un vértice, es decir, un color que no esté
@@ -354,7 +368,3 @@ public class Coloracion {
     
     
 }
-
-
-//Esquema de representación de la solución
-//Esquema de codificacion de soluciones

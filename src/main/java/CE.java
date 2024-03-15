@@ -5,14 +5,15 @@ public class CE {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Seleccione una opción:");
-        System.out.println("1. Problema de coloración");
+        System.out.println("1. Problema de coloración BLI");
         System.out.println("2. Problema de codificación");
         int opcion = escaneaNum(2);
         if (opcion == 1) {
             System.out.println("Ingrese el nombre del archivo: ");
             String rutaIngresada = scanner.next();
             Coloracion coloracion = new Coloracion(rutaIngresada);
-            coloracion.busquedaPorEscalada(30);
+            //Es posible cambiar el critero de término de ambas búsquedas, en este caso BLI 100 iteraciones y BE 50 iteraciones.
+            coloracion.busquedaLocalIterada(100,50);
         } else if (opcion == 2) {
             System.out.println("Seleccione el tipo de optimización:");
             System.out.println("1. Recocido simulado");
