@@ -1,29 +1,6 @@
 import java.util.Scanner;
-import java.lang.Math;
 
 public class CE {
-    public static int escaneaNum(int max) {
-        int res = Integer.MAX_VALUE;
-
-        while (res == Integer.MAX_VALUE) {
-            Scanner scanner = new Scanner(System.in);
-            try {
-                int num = scanner.nextInt();
-                if (num < 1 || num > max) {
-                    res = Integer.MAX_VALUE;
-                    System.out.println("Ingrese un índice válido:");
-                } else {
-                    res = num;
-                }
-            } catch (Exception e) {
-                System.out.println("Se debe ingresar un número entero");
-                res = Integer.MAX_VALUE;
-                System.out.println("Ingrese un entero:");
-            }
-
-        }
-        return res;
-    }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -62,8 +39,27 @@ public class CE {
         }
     }
 
-    public static void verificaDatos(String[] args) {
+    public static int escaneaNum(int max) {
+        int res = Integer.MAX_VALUE;
 
+        while (res == Integer.MAX_VALUE) {
+            Scanner scanner = new Scanner(System.in);
+            try {
+                int num = scanner.nextInt();
+                if (num < 1 || num > max) {
+                    res = Integer.MAX_VALUE;
+                    System.out.println("Ingrese un índice válido:");
+                } else {
+                    res = num;
+                }
+            } catch (Exception e) {
+                System.out.println("Se debe ingresar un número entero");
+                res = Integer.MAX_VALUE;
+                System.out.println("Ingrese un entero:");
+            }
+
+        }
+        return res;
     }
 
 }
