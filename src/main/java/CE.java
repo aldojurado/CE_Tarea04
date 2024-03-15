@@ -4,30 +4,19 @@ public class CE {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Seleccione una opción:");
-        System.out.println("1. Problema de coloración BLI");
-        System.out.println("2. Problema de codificación");
+        imprimeMenu(1);
         int opcion = escaneaNum(2);
         if (opcion == 1) {
             System.out.println("Ingrese el nombre del archivo: ");
             String rutaIngresada = scanner.next();
             Coloracion coloracion = new Coloracion(rutaIngresada);
-            //Es posible cambiar el critero de término de ambas búsquedas, en este caso BLI 100 iteraciones y BE 50 iteraciones.
-            coloracion.busquedaLocalIterada(100,50);
+            // Es posible cambiar el critero de término de ambas búsquedas, en este caso BLI
+            // 100 iteraciones y BE 50 iteraciones.
+            coloracion.busquedaLocalIterada(100, 50);
         } else if (opcion == 2) {
-            System.out.println("Seleccione el tipo de optimización:");
-            System.out.println("1. Recocido simulado");
-            System.out.println("2. Búsqueda aleatoria");
+            imprimeMenu(2);
             int tipoOptimizacion = escaneaNum(2);
-            System.out.println("Seleccione la función a evaluar:");
-            System.out.println("1. Sphere Function");
-            System.out.println("2. Ackley Function");
-            System.out.println("3. Griewank Function");
-            System.out.println("4. Rastrigin Function");
-            System.out.println("5. Rosenbrock Function");
-            System.out.println("6. Sum Square Function");
-            System.out.println("7. Styblinski-Tang Function");
-            System.out.println("8. Dixon-Price Function");
+            imprimeMenu(3);
             int numFun = escaneaNum(8);
 
             System.out.println("Ingrese la dimensión:");
@@ -61,6 +50,28 @@ public class CE {
 
         }
         return res;
+    }
+
+    private static void imprimeMenu(int opcion) {
+        if (opcion == 1) {
+            System.out.println("Seleccione una opción:");
+            System.out.println("1. Problema de coloración BLI");
+            System.out.println("2. Problema de codificación");
+        } else if (opcion == 2) {
+            System.out.println("Seleccione el tipo de optimización:");
+            System.out.println("1. Recocido simulado");
+            System.out.println("2. Búsqueda aleatoria");
+        } else if (opcion == 3) {
+            System.out.println("Seleccione la función a evaluar:");
+            System.out.println("1. Sphere Function");
+            System.out.println("2. Ackley Function");
+            System.out.println("3. Griewank Function");
+            System.out.println("4. Rastrigin Function");
+            System.out.println("5. Rosenbrock Function");
+            System.out.println("6. Sum Square Function");
+            System.out.println("7. Styblinski-Tang Function");
+            System.out.println("8. Dixon-Price Function");
+        }
     }
 
 }
