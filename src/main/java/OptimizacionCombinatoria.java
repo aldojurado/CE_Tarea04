@@ -54,7 +54,7 @@ public class OptimizacionCombinatoria {
     private void todasSolsIter(int dimension) {
         Evaluador evaluador = new Evaluador();
         Recocido recocido = new Recocido();
-        for (int j = 1; j < 10; j++) {
+        for (int j = 1; j < 9; j++) {
             for (int i = 0; i < 10; i++) {
                 double[] res = recocido.recocido(j, dimension);
                 double valor = evaluador.evaluaEn(j, res);
