@@ -15,29 +15,35 @@ public class Recocido {
         Evaluador eval = new Evaluador();
         double[] intervalo = eval.intervalo(numFun);
 
-        // solución inicial
+        // solución inicial y temperatura inicial
         int[] solucion = bin.generaSolucionAleatoria(NBITS * dimension);
         double temp = 10000;
         int numIt = 0;
 
+        // condición de término
         while (numIt < MAXITER && temp > 0) {
             numIt++;
 
             // seleccionamos un vecino
             int[] vecino = bin.vecinoRnd(solucion);
             double[] valores = evaluaBin(solucion, vecino, numFun, intervalo);
+            // si es mejor lo aceptamos automáticamente
             if (valores[1] < valores[0]) {
                 solucion = vecino;
             } else {
+                // si no es mejor lo aceptamos con cierta probabilidad
                 double proba = Math.exp((valores[0] - valores[1]) / temp);
                 double rnd = Math.random();
                 if (rnd < proba) {
                     solucion = vecino;
                 }
             }
+
+            // actualizamos temperatura
             temp = temp * 0.999;
 
         }
+        // regresamos la solución decodificada
         return bin.decodifica(solucion, NBITS, intervalo[0], intervalo[1]);
     }
 
