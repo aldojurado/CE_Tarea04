@@ -1,0 +1,3 @@
+Dimensión: 10
+Solución: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Evaluación de la solución: 1.1111111111E10
