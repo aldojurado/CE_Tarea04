@@ -59,3 +59,13 @@ mvn clean
 El programa cuenta con una pequeña interfaz de texto para ir seleccionando
 las distintas opciones para la ejecución de los algoritmos.
 Los parámetros se pasan después de la ejecución.
+
+Para realizar la ejecución del recocido simulado y búsqueda aleatoria:
+En los menús primero se debe selecciónar:
+ Problema de codificación índice (2)
+    Luego se selecciona recocido simulado o búsqueda aleatoria (1 o 2 respectivamente) 
+    luego se selecciona la función de evaluación (1, ... , 8)
+    y por último se escribe como parámetro la dimensión deseada
+
+La solución se imprimirá en consola de forma automática.
+
