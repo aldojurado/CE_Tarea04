@@ -3,6 +3,13 @@ public class Recocido {
     final int NBITS = 22;
     final int MAXITER = 100000;
 
+    /**
+     * Método que ejecuta el algoritmo de recocido simulado
+     * 
+     * @param numFun    es el número de la función a evaluar
+     * @param dimension es la dimensión de la función
+     * @return un arreglo con la solución encontrada
+     */
     public double[] recocido(int numFun, int dimension) {
         Binario bin = new Binario();
         Evaluador eval = new Evaluador();
@@ -24,7 +31,6 @@ public class Recocido {
             } else {
                 double proba = Math.exp((valores[0] - valores[1]) / temp);
                 double rnd = Math.random();
-                System.out.println("Proba: " + proba + " Rnd: " + rnd);
                 if (rnd < proba) {
                     solucion = vecino;
                 }
@@ -35,6 +41,17 @@ public class Recocido {
         return bin.decodifica(solucion, NBITS, intervalo[0], intervalo[1]);
     }
 
+    /**
+     * Método que evalúa dos soluciones en una de las funciones usando
+     * representación binaria por una partición generada uniformemente
+     * 
+     * @param solucion  es la solución actual a evaluar
+     * @param vecino    es la solución vecina a evaluar
+     * @param numFun    es el número de la función
+     * @param intervalo es el intervalo de la función
+     * @return un arreglo con los valores de las soluciones, el primero es el valor
+     *         de la solución actual y el segundo es el valor de la solución vecina
+     */
     private double[] evaluaBin(int[] solucion, int[] vecino, int numFun, double[] intervalo) {
         Evaluador evaluador = new Evaluador();
         Binario binario = new Binario();
