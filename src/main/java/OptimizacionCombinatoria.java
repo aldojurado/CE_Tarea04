@@ -9,24 +9,91 @@ public class OptimizacionCombinatoria {
         if (optimización == 1) {
             // Recocido simulado
             Recocido recocido = new Recocido();
+            double[] res = recocido.recocido(numFun, dimension);
+            double valor = evaluador.evaluaEn(numFun, res);
+            imprimeSol(res, valor);
 
-            for (int i = 0; i < 10; i++) {
-                double[] res = recocido.recocido(numFun, dimension);
-                double valor = evaluador.evaluaEn(numFun, res);
-                guardarSolucion(res, valor, numFun, i, dimension, "solRecocido");
-            }
+            // Descomentando este se generan los archivos de todas las soluciones de
+            // funciones
+            // 10 por función
+            // todasSolsIter(dimension);
+
         } else if (optimización == 2) {
             // Búsqueda aleatoria
             BusquedaAleatoria busquedaAleatoria = new BusquedaAleatoria();
-            for (int i = 0; i < 10; i++) {
-                double[] res = busquedaAleatoria.busquedaAleatoria(numFun, dimension);
-                double valor = evaluador.evaluaEn(numFun, res);
-                guardarSolucion(res, valor, numFun, i, dimension, "solAleatoria");
-            }
+            busquedaAleatoria.busquedaAleatoria(numFun, dimension);
+
+            // Descomentando este se generan los archivos de soluciones aleatorias
+            // para una función (se generan 10)
+            // solsIteradas(numFun, dimension);
 
         }
     }
 
+    /**
+     * Imprime el contenido de un arreglo y un valor
+     * El contenido representa la solución y el valor la evaluación de la solución
+     * 
+     * @param res
+     * @param valor
+     */
+    private void imprimeSol(double[] res, double valor) {
+        System.out.println("Solución: ");
+        for (int i = 0; i < res.length; i++) {
+            System.out.print(res[i] + " ");
+        }
+        System.out.println("\n\nEvaluación de la solución: " + valor);
+    }
+
+    /**
+     * Genera 10 soluciones para cada una de las 5 funciones requeridas
+     * guarda las soluciones junto con su evaluación en un archivo de texto
+     * 
+     * @param dimension
+     */
+    private void todasSolsIter(int dimension) {
+        Evaluador evaluador = new Evaluador();
+        Recocido recocido = new Recocido();
+        for (int j = 1; j < 10; j++) {
+            for (int i = 0; i < 10; i++) {
+                double[] res = recocido.recocido(j, dimension);
+                double valor = evaluador.evaluaEn(j, res);
+                guardarSolucion(res, valor, j, i, dimension, "SolucionesRecocido/solRecocido");
+            }
+        }
+    }
+
+    /**
+     * Genera 10 soluciones aleatorias para una función y lo guarda
+     * en un archivo de texto junto con la evaluación de la solución
+     * 
+     * @param numFun
+     * @param dimension
+     */
+    private void solsIteradas(int numFun, int dimension) {
+        Evaluador evaluador = new Evaluador();
+        BusquedaAleatoria busquedaAleatoria = new BusquedaAleatoria();
+        for (int i = 0; i < 10; i++) {
+            double[] res = busquedaAleatoria.busquedaAleatoria(numFun, dimension);
+            double valor = evaluador.evaluaEn(numFun, res);
+            guardarSolucion(res, valor, numFun, i, dimension, "solAleatoria");
+        }
+    }
+
+    /**
+     * Guarda la solución y su evaluación en un archivo de texto
+     * Este método es el encargado de ir generando los archivos de texto
+     * Guarda los archivos con un nombre que indica la forma de optimización y
+     * la función que se optimiza
+     * Dentro del archivo guarda la solución, su evaluación y la dimensión
+     * 
+     * @param res
+     * @param valor
+     * @param numFun
+     * @param index
+     * @param dimension
+     * @param optimizacion
+     */
     private void guardarSolucion(double[] res, double valor, int numFun, int index, int dimension,
             String optimizacion) {
         String solucion = "Solución: [";
@@ -62,6 +129,13 @@ public class OptimizacionCombinatoria {
         }
     }
 
+    /**
+     * Devuelve el nombre de la función que se está optimizando respecto al índice
+     * que se le asigna
+     * 
+     * @param numFun
+     * @return string con nombre de la función
+     */
     private String nombreFuncion(int numFun) {
         String nombre = "";
         switch (numFun) {
