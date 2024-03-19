@@ -62,12 +62,12 @@ Los parámetros se pasan después de la ejecución.
 
 Para realizar la ejecución del recocido simulado y búsqueda aleatoria:
 En los menús primero se debe selecciónar:
- Problema de codificación índice (2)
+ Problema de optimización contínua índice (2)
     Luego se selecciona recocido simulado o búsqueda aleatoria (1 o 2 respectivamente) 
     luego se selecciona la función de evaluación (1, ... , 8)
     y por último se escribe como parámetro la dimensión deseada
 
-La solución se imprimirá en consola de forma automática y se guardará en un archivo.
+Se imprimirán 10 soluciones generadas por el algoritmo seleccionado (en dicha dimensión) y se guardarán en archivos de texto.
 
 Los métodos para generar de forma masiva las soluciones se encuentran comentados en OptimizacionCombinatoria.java, debido a que estos solo
 fueron usados para generar los archivos de soluciones.
