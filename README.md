@@ -67,5 +67,8 @@ En los menús primero se debe selecciónar:
     luego se selecciona la función de evaluación (1, ... , 8)
     y por último se escribe como parámetro la dimensión deseada
 
-La solución se imprimirá en consola de forma automática.
+La solución se imprimirá en consola de forma automática y se guardará en un archivo.
+
+Los métodos para generar de forma masiva las soluciones se encuentran comentados en OptimizacionCombinatoria.java, debido a que estos solo
+fueron usados para generar los archivos de soluciones.
 
