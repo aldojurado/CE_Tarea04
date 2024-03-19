@@ -1,6 +1,8 @@
 import java.util.Scanner;
 
 public class CE {
+    final static String GREEN = "\u001B[32m";
+    final static String BLANCO = "\u001B[0m";
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -54,15 +56,16 @@ public class CE {
 
     private static void imprimeMenu(int opcion) {
         if (opcion == 1) {
-            System.out.println("Seleccione una opción:");
+            System.out.println(GREEN + "Seleccione una opción:" + BLANCO);
+
             System.out.println("1. Problema de coloración BLI");
-            System.out.println("2. Problema de codificación");
+            System.out.println("2. Problema de optimización continua");
         } else if (opcion == 2) {
-            System.out.println("Seleccione el tipo de optimización:");
+            System.out.println(GREEN + "Seleccione el tipo de optimización:" + BLANCO);
             System.out.println("1. Recocido simulado");
             System.out.println("2. Búsqueda aleatoria");
         } else if (opcion == 3) {
-            System.out.println("Seleccione la función a evaluar:");
+            System.out.println(GREEN + "Seleccione la función a evaluar:" + BLANCO);
             System.out.println("1. Sphere Function");
             System.out.println("2. Ackley Function");
             System.out.println("3. Griewank Function");
