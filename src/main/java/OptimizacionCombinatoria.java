@@ -8,24 +8,28 @@ public class OptimizacionCombinatoria {
         Evaluador evaluador = new Evaluador();
         if (optimización == 1) {
             // Recocido simulado
-            Recocido recocido = new Recocido();
-            double[] res = recocido.recocido(numFun, dimension);
-            double valor = evaluador.evaluaEn(numFun, res);
-            imprimeSol(res, valor);
+            solsIteradasR(numFun, dimension);
 
-            // Descomentando este se generan los archivos de todas las soluciones de
-            // funciones
-            // 10 por función
-            // todasSolsIter(dimension);
+            /*
+             * Descomentando este se generan todos los archivos de soluciones para todas las
+             * funciones
+             * for (int i = 1; i < 9; i++) {
+             * solsIteradasR(i, dimension);
+             * }
+             */
 
         } else if (optimización == 2) {
             // Búsqueda aleatoria
-            BusquedaAleatoria busquedaAleatoria = new BusquedaAleatoria();
-            busquedaAleatoria.busquedaAleatoria(numFun, dimension);
 
-            // Descomentando este se generan los archivos de soluciones aleatorias
-            // para una función (se generan 10)
-            // solsIteradas(numFun, dimension);
+            solsIteradas(numFun, dimension);
+
+            /*
+             * Descomentando este se generan todos los archivos de soluciones para todas las
+             * funciones
+             * for (int i = 1; i < 9; i++) {
+             * solsIteradas(i, dimension);
+             * }
+             */
 
         }
     }
@@ -46,24 +50,6 @@ public class OptimizacionCombinatoria {
     }
 
     /**
-     * Genera 10 soluciones para cada una de las 5 funciones requeridas
-     * guarda las soluciones junto con su evaluación en un archivo de texto
-     * 
-     * @param dimension
-     */
-    private void todasSolsIter(int dimension) {
-        Evaluador evaluador = new Evaluador();
-        Recocido recocido = new Recocido();
-        for (int j = 1; j < 9; j++) {
-            for (int i = 0; i < 10; i++) {
-                double[] res = recocido.recocido(j, dimension);
-                double valor = evaluador.evaluaEn(j, res);
-                guardarSolucion(res, valor, j, i, dimension, "SolucionesRecocido/solRecocido");
-            }
-        }
-    }
-
-    /**
      * Genera 10 soluciones aleatorias para una función y lo guarda
      * en un archivo de texto junto con la evaluación de la solución
      * 
@@ -74,9 +60,22 @@ public class OptimizacionCombinatoria {
         Evaluador evaluador = new Evaluador();
         BusquedaAleatoria busquedaAleatoria = new BusquedaAleatoria();
         for (int i = 0; i < 10; i++) {
+            System.out.println("\u001B[32m\nBúsqueda # " + i + ":\u001B[0m");
             double[] res = busquedaAleatoria.busquedaAleatoria(numFun, dimension);
             double valor = evaluador.evaluaEn(numFun, res);
-            guardarSolucion(res, valor, numFun, i, dimension, "solAleatoria");
+            guardarSolucion(res, valor, numFun, i, dimension, "SolucionesBAleatorias/solAleatoria");
+        }
+    }
+
+    private void solsIteradasR(int numFun, int dimension) {
+        Evaluador evaluador = new Evaluador();
+        Recocido recocido = new Recocido();
+        for (int i = 0; i < 10; i++) {
+            System.out.println("\u001B[32m\nBúsqueda # " + i + ":\u001B[0m");
+            double[] res = recocido.recocido(numFun, dimension);
+            double valor = evaluador.evaluaEn(numFun, res);
+            imprimeSol(res, valor);
+            guardarSolucion(res, valor, numFun, i, dimension, "SolucionesRecocido/solRecocido");
         }
     }
 
