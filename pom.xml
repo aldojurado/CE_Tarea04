@@ -4,9 +4,9 @@
 <artifactId>proyecto</artifactId>
 <version>Cómputo Evolutivo</version>
 <packaging>jar</packaging>
-<name>Tarea 01</name>
+<name>Tarea 04</name>
 <description>
-Tarea 01
+Tarea 04
 </description>
 <properties>
 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
