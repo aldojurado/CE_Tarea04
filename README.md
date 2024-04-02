@@ -1,4 +1,4 @@
-# Tarea 03: Metaheurísticas de Trayectoria
+# Tarea 04: Algoritmo Genético
 
 ## Integrantes del equipo:
 
