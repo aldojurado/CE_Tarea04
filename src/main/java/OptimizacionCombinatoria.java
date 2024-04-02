@@ -31,6 +31,11 @@ public class OptimizacionCombinatoria {
              * }
              */
 
+        } else if (optimización == 3) {
+            // Algoritmo genético
+
+        } else {
+            System.out.println("Opción inválida");
         }
     }
 
