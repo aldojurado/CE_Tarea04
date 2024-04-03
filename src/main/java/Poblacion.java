@@ -78,4 +78,12 @@ public class Poblacion {
         double[] mejorSol = binario.decodifica(individuos[mejor], numBits, intervalo[0], intervalo[1]);
         return mejorSol;
     }
+
+    /**
+     * Selecciona en la población actual los padres para la siguiente generación
+     * 
+     */
+    public void seleccionarPadres() {
+        Poblacion padres = new Poblacion(tam, numBits, seed, dimension, numFun);
+    }
 }
