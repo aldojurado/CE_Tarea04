@@ -8,6 +8,8 @@ public class Poblacion {
     private int[][] individuos;
     private int dimension;
     private int[] mejorIndividuo;
+    private int numFun;
+    private double[] intervalo;
 
     /**
      * Constructor de la población
@@ -17,13 +19,16 @@ public class Poblacion {
      * @param seed
      * @param dimension
      */
-    public Poblacion(int tamPoblacion, int numBits, int seed, int dimension) {
+    public Poblacion(int tamPoblacion, int numBits, int seed, int dimension, int numFun) {
         this.tam = tamPoblacion;
         this.numBits = numBits;
         this.seed = seed;
         this.individuos = generaIndividuos(seed, tamPoblacion, numBits, dimension);
         this.evaluaciones = new double[tamPoblacion];
         this.dimension = dimension;
+        this.numFun = numFun;
+        Evaluador evaluador = new Evaluador();
+        this.intervalo = evaluador.intervalo(numFun);
     }
 
     /**
@@ -46,10 +51,9 @@ public class Poblacion {
         return individuos;
     }
 
-    public void evaluarPoblacion(int numFun) {
+    public void evaluarPoblacion() {
         Binario binario = new Binario();
         Evaluador evaluador = new Evaluador();
-        double[] intervalo = evaluador.intervalo(numFun);
         for (int i = 0; i < tam; i++) {
             int[] individuo = individuos[i];
             double[] solucion = binario.decodifica(individuo, numBits, intervalo[0], intervalo[1]);
@@ -60,19 +64,18 @@ public class Poblacion {
 
     /**
      * Imprime el mejor individuo de la población
+     * Para mandar a llamar este debemos evaluar la población primero
      */
-    public void mejor() {
+    public double[] mejor() {
+        Binario binario = new Binario();
         int mejor = 0;
         for (int i = 0; i < tam; i++) {
             if (evaluaciones[i] < evaluaciones[mejor]) {
                 mejor = i;
             }
         }
-        mejorIndividuo = individuos[mejor];
-        System.out.println("Mejor vale:" + evaluaciones[mejor] + "\n");
-        for (int i = 0; i < mejorIndividuo.length; i++) {
-            System.out.print(mejorIndividuo[i]);
-        }
-        System.out.println("Uno random vale:" + evaluaciones[0] + "\n");
+
+        double[] mejorSol = binario.decodifica(individuos[mejor], numBits, intervalo[0], intervalo[1]);
+        return mejorSol;
     }
 }

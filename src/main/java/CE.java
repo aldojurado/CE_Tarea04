@@ -34,13 +34,15 @@ public class CE {
 
             double probCruza = escaneaProba(1);
 
-            double probMutacion = escaneaProba(1);
+            double probMutacion = escaneaProba(2);
 
             System.out.println("Ingrese la dimensión:");
             int dimension = escaneaNum(50);
 
             AG ag = new AG();
-            ag.algoritmoGenetico(numFun, tamPoblacion, seed, probCruza, probMutacion, dimension);
+            double[] solucion = ag.algoritmoGenetico(numFun, tamPoblacion, seed, probCruza, probMutacion, dimension);
+            Evaluador evaluador = new Evaluador();
+            System.out.println("El valor de la función es: " + evaluador.evaluaEn(numFun, solucion));
 
         } else {
             System.out.println("Opción inválida");
