@@ -1,7 +1,7 @@
 
 public class AG {
     final int NBITS = 22;
-    final int MAXITER = 1000;
+    final int MAXITER = 2;
 
     public double[] algoritmoGenetico(int numFun, int tamPoblacion, int seed, double probCruza, double probMutacion,
             int dimension) {
@@ -14,6 +14,8 @@ public class AG {
         while (iteracion < MAXITER) {
             iteracion++;
             // 1.-Selección de padres por ruleta
+            Poblacion padres = p.clone();
+            padres.seleccionarPadres();
 
             // 2.-Recombinación, cruz a de un punto con probabilidad probCruza 0.7 sugerido
 

@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Poblacion {
+public class Poblacion implements Cloneable {
     private int tam;
     private int numBits;
     private int seed;
@@ -59,23 +59,113 @@ public class Poblacion {
             double[] solucion = binario.decodifica(individuo, numBits, intervalo[0], intervalo[1]);
             evaluaciones[i] = evaluador.evaluaEn(numFun, solucion);
         }
+        mejorIndividuo = mejorBin();
 
     }
 
     /**
-     * Imprime el mejor individuo de la población
-     * Para mandar a llamar este debemos evaluar la población primero
+     * @return Devuelve el mejor individuo de la población en su representación
+     *         binaria
      */
-    public double[] mejor() {
-        Binario binario = new Binario();
+    private int[] mejorBin() {
         int mejor = 0;
         for (int i = 0; i < tam; i++) {
             if (evaluaciones[i] < evaluaciones[mejor]) {
                 mejor = i;
             }
         }
+        return individuos[mejor];
+    }
 
-        double[] mejorSol = binario.decodifica(individuos[mejor], numBits, intervalo[0], intervalo[1]);
+    /**
+     * @return Devuelve el mejor individuo de la población en su representación
+     *         decimal
+     */
+    public double[] mejor() {
+        Binario binario = new Binario();
+        int[] mejorIndividuo = mejorBin();
+        double[] mejorSol = binario.decodifica(mejorIndividuo, numBits, intervalo[0], intervalo[1]);
         return mejorSol;
+    }
+
+    // seguir en este método
+    public void seleccionarPadres() {
+        int numHijos = 0;
+        while (numHijos < tam) {
+            int[] padre1 = individuos[ruleta()];
+            int[] padre2 = individuos[ruleta()];
+            int[] hijo1 = cruzar(padre1, padre2);
+            int[] hijo2 = cruzar(padre2, padre1);
+            if (numHijos < tam) {
+                individuos[numHijos] = hijo1;
+                numHijos++;
+
+            }
+            if (numHijos < tam) {
+
+                individuos[numHijos] = hijo1;
+                numHijos++;
+            }
+        }
+
+    }
+
+    private int ruleta() {
+        // Calculamos la aptitud total
+        double f = 0;
+        for (int i = 0; i < tam; i++) {
+            f += evaluaciones[i];
+        }
+
+        // Calculamos la probabilidad de selección de cada individuo
+        double[] proba = new double[tam];
+        for (int i = 0; i < tam; i++) {
+            proba[i] = evaluaciones[i] / f;
+        }
+
+        // Generamos un número aleatorio entre 0 y 1
+        Random random = new Random();
+        double r = random.nextDouble();
+
+        // Realizamos la selección basada en la ruleta
+        double probaAcumulada = 0;
+        for (int i = 0; i < tam; i++) {
+            probaAcumulada += proba[i];
+            if (r < probaAcumulada) {
+                return i;
+            }
+        }
+
+        // El ciclo debe funcionar bn, pero igual java nos pide que devolvamos algunos,
+        // por cualquier cosa dejamos el último
+        return tam - 1;
+    }
+
+    @Override
+    public Poblacion clone() {
+        try {
+            Poblacion clonedPoblacion = (Poblacion) super.clone();
+            // Copiar los atributos primitivos
+            clonedPoblacion.tam = this.tam;
+            clonedPoblacion.numBits = this.numBits;
+            clonedPoblacion.seed = this.seed;
+            clonedPoblacion.dimension = this.dimension;
+            clonedPoblacion.numFun = this.numFun;
+
+            // Copiar los arrays
+            clonedPoblacion.evaluaciones = this.evaluaciones.clone();
+            clonedPoblacion.mejorIndividuo = this.mejorIndividuo.clone();
+            clonedPoblacion.intervalo = this.intervalo.clone();
+
+            // Copiar la matriz
+            clonedPoblacion.individuos = new int[this.individuos.length][];
+            for (int i = 0; i < this.individuos.length; i++) {
+                clonedPoblacion.individuos[i] = this.individuos[i].clone();
+            }
+
+            return clonedPoblacion;
+        } catch (CloneNotSupportedException e) {
+            throw new InternalError(e);
+        }
     }
 }
