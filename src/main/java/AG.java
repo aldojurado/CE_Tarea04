@@ -14,12 +14,8 @@ public class AG {
         while (iteracion < MAXITER) {
             iteracion++;
             // 1.-Selección de padres por ruleta
-<<<<<<< HEAD
             Poblacion padres = p.clone();
             padres.seleccionarPadres();
-=======
-            p.seleccionarPadres();
->>>>>>> b7eb6cf98d4a3848f7137b9585311130980aa871
 
             // 2.-Recombinación, cruz a de un punto con probabilidad probCruza 0.7 sugerido
 

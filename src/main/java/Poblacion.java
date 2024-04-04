@@ -94,8 +94,9 @@ public class Poblacion implements Cloneable {
         while (numHijos < tam) {
             int[] padre1 = individuos[ruleta()];
             int[] padre2 = individuos[ruleta()];
-            int[] hijo1 = cruzar(padre1, padre2);
-            int[] hijo2 = cruzar(padre2, padre1);
+            int[][] hijos = cruzar(padre2, padre1);
+            int[] hijo1 = hijos[0];
+            int[] hijo2 = hijos[1];
             if (numHijos < tam) {
                 individuos[numHijos] = hijo1;
                 numHijos++;
@@ -103,11 +104,16 @@ public class Poblacion implements Cloneable {
             }
             if (numHijos < tam) {
 
-                individuos[numHijos] = hijo1;
+                individuos[numHijos] = hijo2;
                 numHijos++;
             }
         }
 
+    }
+
+    private int[][] cruzar(int[] padre1, int[] padre2) {
+        int[][] hijos = new int[2][padre1.length];
+        return hijos;
     }
 
     private int ruleta() {
