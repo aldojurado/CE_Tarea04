@@ -88,31 +88,61 @@ public class Poblacion implements Cloneable {
         return mejorSol;
     }
 
-    // seguir en este método
-    public void seleccionarPadres() {
+    /**
+     * Selecciona los padres a recombinar y realiza la cruza
+     * en n puntos con probabilidad probCruza
+     */
+    public void seleccionarPadresRecombinar(double probCruza) {
+        int[][] aux = new int[tam][numBits * dimension];
         int numHijos = 0;
         while (numHijos < tam) {
             int[] padre1 = individuos[ruleta()];
             int[] padre2 = individuos[ruleta()];
-            int[][] hijos = cruzar(padre2, padre1);
+            int[][] hijos = cruzarN(padre2, padre1, probCruza);
             int[] hijo1 = hijos[0];
             int[] hijo2 = hijos[1];
             if (numHijos < tam) {
-                individuos[numHijos] = hijo1;
+                aux[numHijos] = hijo1;
                 numHijos++;
 
             }
             if (numHijos < tam) {
 
-                individuos[numHijos] = hijo2;
+                aux[numHijos] = hijo2;
                 numHijos++;
             }
         }
+        individuos = aux;
 
     }
 
-    private int[][] cruzar(int[] padre1, int[] padre2) {
+    private int[][] cruzarN(int[] padre1, int[] padre2, double probCruza) {
         int[][] hijos = new int[2][padre1.length];
+
+        // vamos a ir haciendo saltos random entre el índice actual y el final, o sea
+        // que el tamñao se va a ir reduciende
+        Random random = new Random();
+        if (random.nextDouble() < probCruza) {
+            int indActual = 0;
+            int tamPadre = padre1.length;
+            while (indActual < tamPadre) {
+                int rango = tamPadre - indActual;
+                int salto = random.nextInt(rango) + indActual;
+                if (salto == indActual) {
+                    salto++;
+                }
+                for (int i = indActual; i < salto; i++) {
+                    hijos[0][i] = padre1[i];
+                    hijos[1][i] = padre2[i];
+                }
+                indActual = salto;
+            }
+        } else {
+            hijos[0] = padre1;
+            hijos[1] = padre2;
+
+        }
+
         return hijos;
     }
 
@@ -173,5 +203,23 @@ public class Poblacion implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new InternalError(e);
         }
+    }
+
+    public void mutar(double probMutacion) {
+        for (int i = 0; i < tam; i++) {
+            for (int j = 0; j < numBits * dimension; j++) {
+                if (Math.random() < probMutacion) {
+                    individuos[i][j] = 1 - individuos[i][j];
+                }
+            }
+        }
+        individuos[0] = mejorIndividuo;
+    }
+
+    public void imprimeMejor() {
+        Evaluador evaluador = new Evaluador();
+        double[] mejor = mejor();
+        double mej = evaluador.evaluaEn(numFun, mejor);
+        System.out.println("Mejor individuo: " + mej);
     }
 }
