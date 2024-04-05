@@ -156,7 +156,7 @@ public class Poblacion implements Cloneable {
         // Calculamos la probabilidad de selección de cada individuo
         double[] proba = new double[tam];
         for (int i = 0; i < tam; i++) {
-            proba[i] = evaluaciones[i] / f;
+            proba[i] = 1 - evaluaciones[i] / f;
         }
 
         // Generamos un número aleatorio entre 0 y 1
@@ -213,13 +213,25 @@ public class Poblacion implements Cloneable {
                 }
             }
         }
-        individuos[0] = mejorIndividuo;
+        Random random = new Random();
+        int indx = random.nextInt(tam);
+        individuos[indx] = mejorIndividuo;
     }
 
-    public void imprimeMejor() {
+    /**
+     * @return Devuelve la aptitud del mejor individuo de la población
+     */
+    public double mejorAptitud() {
         Evaluador evaluador = new Evaluador();
         double[] mejor = mejor();
-        double mej = evaluador.evaluaEn(numFun, mejor);
-        System.out.println("Mejor individuo: " + mej);
+        return evaluador.evaluaEn(numFun, mejor);
+    }
+
+    public double promedioAptitud() {
+        double promedio = 0;
+        for (int i = 0; i < tam; i++) {
+            promedio += evaluaciones[i];
+        }
+        return promedio / tam;
     }
 }
