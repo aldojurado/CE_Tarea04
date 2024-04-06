@@ -14,10 +14,10 @@ public class CE {
         if (opcion == 1) {
             System.out.println("Ingrese el nombre del archivo: ");
             String rutaIngresada = scanner.next();
-            Coloracion coloracion = new Coloracion(rutaIngresada);
-            // Es posible cambiar el critero de término de ambas búsquedas, en este caso BLI
-            // 100 iteraciones y BE 50 iteraciones.
-            coloracion.busquedaLocalIterada(100, 50);
+            // Tamaño de la población modificable, en este caso 100
+            Coloracion coloracion = new Coloracion(rutaIngresada, 100);
+            // Número de generaciones y tasa de mutación modificables, en este caso 100 generaciones y 0.1 de tasa
+            coloracion.algoritmoGeneticoElitista(100, 0.1);
         } else if (opcion == 2) {
             imprimeMenu(2);
             int numFun = escaneaNum(8);
