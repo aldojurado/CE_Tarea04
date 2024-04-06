@@ -89,31 +89,49 @@ public class Poblacion implements Cloneable {
     }
 
     /**
-     * Selecciona los padres a recombinar y realiza la cruza
-     * en n puntos con probabilidad probCruza
+     * Selecciona padres por ruleta y los cruza para generar una nueva generación
+     * 
+     * @param probCruza
      */
     public void seleccionarPadresRecombinar(double probCruza) {
-        int[][] aux = new int[tam][numBits * dimension];
+        int[][] nuevaGeneracion = new int[tam][numBits * dimension];
         int numHijos = 0;
+
         while (numHijos < tam) {
-            int[] padre1 = individuos[ruleta()];
-            int[] padre2 = individuos[ruleta()];
-            int[][] hijos = cruzarN(padre2, padre1, probCruza);
-            int[] hijo1 = hijos[0];
-            int[] hijo2 = hijos[1];
-            if (numHijos < tam) {
-                aux[numHijos] = hijo1;
-                numHijos++;
+            int[] padre1 = seleccionarPadre();
+            int[] padre2 = seleccionarPadre();
+            int[][] hijos = cruzarN(padre1, padre2, probCruza);
 
-            }
-            if (numHijos < tam) {
-
-                aux[numHijos] = hijo2;
-                numHijos++;
+            // Agregar hijos a la nueva generación
+            for (int i = 0; i < hijos.length && numHijos < tam; i++) {
+                nuevaGeneracion[numHijos++] = hijos[i];
             }
         }
-        individuos = aux;
+        individuos = nuevaGeneracion;
+    }
 
+    private int[] seleccionarPadre() {
+        return individuos[ruleta()];
+    }
+
+    private int[][] cruzar(int[] padre1, int[] padre2, double probCruza) {
+        int[][] hijos = new int[2][padre1.length];
+
+        // vamos a ir haciendo saltos random entre el índice actual y el final, o sea
+        // que el tamñao se va a ir reduciende
+        Random random = new Random();
+        int tamPadre = padre1.length;
+        int salto = random.nextInt(tamPadre);
+        for (int i = 0; i < salto; i++) {
+            hijos[0][i] = padre1[i];
+            hijos[1][i] = padre2[i];
+        }
+        for (int i = salto; i < tamPadre; i++) {
+            hijos[0][i] = padre2[i];
+            hijos[1][i] = padre1[i];
+        }
+
+        return hijos;
     }
 
     private int[][] cruzarN(int[] padre1, int[] padre2, double probCruza) {
@@ -124,6 +142,7 @@ public class Poblacion implements Cloneable {
         Random random = new Random();
         if (random.nextDouble() < probCruza) {
             int indActual = 0;
+            int intercambiador = 0;
             int tamPadre = padre1.length;
             while (indActual < tamPadre) {
                 int rango = tamPadre - indActual;
@@ -132,9 +151,10 @@ public class Poblacion implements Cloneable {
                     salto++;
                 }
                 for (int i = indActual; i < salto; i++) {
-                    hijos[0][i] = padre1[i];
-                    hijos[1][i] = padre2[i];
+                    hijos[intercambiador][i] = padre1[i];
+                    hijos[1 - intercambiador][i] = padre2[i];
                 }
+                intercambiador = 1 - intercambiador;
                 indActual = salto;
             }
         } else {
@@ -206,16 +226,29 @@ public class Poblacion implements Cloneable {
     }
 
     public void mutar(double probMutacion) {
-        for (int i = 0; i < tam; i++) {
-            for (int j = 0; j < numBits * dimension; j++) {
-                if (Math.random() < probMutacion) {
-                    individuos[i][j] = 1 - individuos[i][j];
-                }
+        Random random = new Random();
+        for (int j = 0; j < tam; j++) {
+            if (random.nextDouble() < probMutacion) {
+                mutarflip(j);
             }
         }
-        Random random = new Random();
-        int indx = random.nextInt(tam);
-        individuos[indx] = mejorIndividuo;
+        int elite = random.nextInt(tam);
+
+        individuos[elite] = mejorIndividuo;
+
+    }
+
+    /**
+     * Hace una mutación flip al individuo en la posición j
+     * Por como lo mandamos a llamar previamente ya nos aseguramos de que j
+     * esté entre 0 y numBits*dimension, es decir, que sea un índice válido
+     * 
+     * @param j
+     */
+    private void mutarflip(int j) {
+        for (int i = 0; i < individuos[j].length; i++) {
+            individuos[j][i] = 1 - individuos[j][i];
+        }
     }
 
     /**

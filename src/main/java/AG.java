@@ -31,8 +31,8 @@ public class AG {
              * 3.-Mutación, intercambio 1 bit con probabilidad probMutacion
              * 1/(popsize*dimension*NBITS) sugerido
              */
-            hijos.mutar(probMutacion);
-            // hijos.mutar(1 / (tamPoblacion * dimension * NBITS));
+            // hijos.mutar(probMutacion);
+            hijos.mutar(50 / (tamPoblacion));
 
             hijos.evaluarPoblacion();
 
