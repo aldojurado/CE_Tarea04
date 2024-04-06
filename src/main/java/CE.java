@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class CE {
@@ -27,22 +30,25 @@ public class CE {
              * 4.- Probabilidad de mutación (0,1)
              */
             System.out.println("Ingrese el tamaño de la población:");
-            int tamPoblacion = escaneaNum(100);
+            int tamPoblacion = escaneaNum(200);
 
             System.out.println("Ingrese la semilla para generar la población inicial:");
             int seed = escaneaNum(Integer.MAX_VALUE);
 
             double probCruza = escaneaProba(1);
 
-            double probMutacion = escaneaProba(2);
+            // double probMutacion = escaneaProba(2);
+            double probMutacion = 2 / (double) tamPoblacion;
 
             System.out.println("Ingrese la dimensión:");
             int dimension = escaneaNum(50);
 
             AG ag = new AG();
-            double[] solucion = ag.algoritmoGenetico(numFun, tamPoblacion, seed, probCruza, probMutacion, dimension);
+            double[] solucion = ag.algoritmoGenetico(numFun, tamPoblacion, seed,
+                    probCruza, probMutacion, dimension);
             Evaluador evaluador = new Evaluador();
-            System.out.println("El valor de la función es: " + evaluador.evaluaEn(numFun, solucion));
+            System.out.println("El valor de la función es: " + evaluador.evaluaEn(numFun,
+                    solucion));
 
         } else {
             System.out.println("Opción inválida");

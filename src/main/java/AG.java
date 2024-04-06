@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class AG {
     final int NBITS = 22;
-    final int MAXITER = 10000;
+    final int MAXITER = 1000;
 
     public double[] algoritmoGenetico(int numFun, int tamPoblacion, int seed, double probCruza, double probMutacion,
             int dimension) {
@@ -24,15 +24,18 @@ public class AG {
             iteracion++;
             // 1.-Selección de padres por ruleta
             Poblacion hijos = p.clone();
-            // 2.-Recombinación, cruz a de un punto con probabilidad probCruza 0.7 sugerido
+            // 2.-Recombinación, cruz a de un punto con probabilidad probCruza 2 sugerido
             hijos.seleccionarPadresRecombinar(probCruza);
 
             /*
              * 3.-Mutación, intercambio 1 bit con probabilidad probMutacion
-             * 1/(popsize*dimension*NBITS) sugerido
+             * 2 / (tamPoblacion) sugerido para que se muten dos individuos
              */
-            // hijos.mutar(probMutacion);
-            hijos.mutar(50 / (tamPoblacion));
+            hijos.mutar(probMutacion);
+
+            // Elitismo guardamos al mejor individuo de la población actual antes de
+            // evaluarla de nuevo en la siguiente iteración
+            hijos.elite();
 
             hijos.evaluarPoblacion();
 
