@@ -15,9 +15,14 @@ public class CE {
             System.out.println("Ingrese el nombre del archivo: ");
             String rutaIngresada = scanner.next();
             // Tamaño de la población modificable, en este caso 100
-            Coloracion coloracion = new Coloracion(rutaIngresada, 100);
-            // Número de generaciones y tasa de mutación modificables, en este caso 100 generaciones y 0.1 de tasa
-            coloracion.algoritmoGeneticoElitista(100, 0.1);
+            GeneticColoration coloracion = new GeneticColoration(rutaIngresada, 100);
+            // Número de generaciones y tasa de mutación modificables, en este caso 100
+            // generaciones y 0.1 de tasa
+            try {
+                coloracion.algoritmoGeneticoElitista(100, 0.1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else if (opcion == 2) {
             imprimeMenu(2);
             int numFun = escaneaNum(8);

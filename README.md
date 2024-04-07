@@ -62,13 +62,10 @@ Los parámetros se pasan después de la ejecución.
 
 Para realizar la ejecución del recocido simulado y búsqueda aleatoria:
 En los menús primero se debe selecciónar:
- Problema de optimización contínua índice (2)
-    Luego se selecciona recocido simulado o búsqueda aleatoria (1 o 2 respectivamente) 
+ Problema de optimización contínua índice (2) 
     luego se selecciona la función de evaluación (1, ... , 8)
-    y por último se escribe como parámetro la dimensión deseada
+    y por último se escribe como parámetros el tamaño de la población, la semilla, la probabilidad de cruza y la dimensión de la función.
 
-Se imprimirán 10 soluciones generadas por el algoritmo seleccionado (en dicha dimensión) y se guardarán en archivos de texto.
+Se imprimirán la mejor solución encontrada y se guardarán en el archivo src/outoput/solucionesContinuas/reporte.txt la mejor aptitud y la aptitud promedio en cada generación.
 
-Los métodos para generar de forma masiva las soluciones se encuentran comentados en OptimizacionCombinatoria.java, debido a que estos solo
-fueron usados para generar los archivos de soluciones.
-
+Adicionalmente en el directorio src/output/solucionesContinuas se encuentran las gráficas de aptitud y la tabla con la mejor solución en las 30 ejecuciones por cada función.

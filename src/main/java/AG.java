@@ -37,8 +37,6 @@ public class AG {
             // evaluarla de nuevo en la siguiente iteración
             hijos.elite();
 
-            hijos.evaluarPoblacion();
-
             // 4.-Reemplazo generacional
             p = hijos.clone();
         }
@@ -52,7 +50,8 @@ public class AG {
         try {
             FileWriter fileWriter = new FileWriter(nombreArchivo);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-
+            bufferedWriter.write("# iteración mejor promedio");
+            bufferedWriter.newLine();
             for (int i = 0; i < promedio.length; i++) {
                 bufferedWriter.write(i + " " + mejor[i] + " " + promedio[i]);
                 bufferedWriter.newLine();
