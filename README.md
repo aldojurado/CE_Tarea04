@@ -60,11 +60,11 @@ El programa cuenta con una pequeña interfaz de texto para ir seleccionando
 las distintas opciones para la ejecución de los algoritmos.
 Los parámetros se pasan después de la ejecución.
 
-Para realizar la ejecución del recocido simulado y búsqueda aleatoria:
-En los menús primero se debe selecciónar:
- Problema de optimización contínua índice (2) 
-    luego se selecciona la función de evaluación (1, ... , 8)
-    y por último se escribe como parámetros el tamaño de la población, la semilla, la probabilidad de cruza y la dimensión de la función.
+Para realizar la ejecución del algoritmo genético de optimización continua se debe seguir los siguientes pasos:<br>
+En los menús primero se debe selecciónar:<br>
+ Problema de optimización contínua índice (2)<br> 
+    luego se selecciona la función de evaluación (1, ... , 8)<br>
+    y por último se escribe como parámetros el tamaño de la población, la semilla, la probabilidad de cruza y la dimensión de la función.<br>
 
 Se imprimirán la mejor solución encontrada y se guardarán en el archivo src/outoput/solucionesContinuas/reporte.txt la mejor aptitud y la aptitud promedio en cada generación.
 
